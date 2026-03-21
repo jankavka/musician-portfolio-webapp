@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="cs" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/admin-layout.html :: head}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body class="admin-body">
+
+    <nav th:replace="~{fragments/admin-layout.html :: navigation}"></nav>
+
+    <div class="container mt-5">
+        <form role="form" method="POST" style="margin-bottom: 5px;" th:action="@{/o-me/admin}"
+            th:object="${aboutMeDto}">
+            <textarea id="content" class="mb-5" th:field="*{content}">
+            </textarea>
+            <div class="d-flex justify-content-start">
+                <input type="submit" class="btn btn-primary mt-5" value="Odeslat" />
+                <a class="btn btn-warning mt-5 ms-5" href="/o-me/admin">Zpět</a>
+            </div>
+        </form>
+
+    </div>
+
+
+    <footer th:replace="~{fragments/admin-layout.html :: footer}"></footer>
+
+    <script src="../script/tinymce/tinymce.min.js"></script>
+
+    <script>
+        tinymce.init({
+            selector: '#content',
+            license_key: 'gpl',
+            width: 900,
+            margin_bottom: 5,
+        });
+    </script>
+
+</body>
+
+</html>

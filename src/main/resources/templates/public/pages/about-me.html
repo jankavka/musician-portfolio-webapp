@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="cs" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout.html :: head}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O mě</title>
+</head>
+<body>
+    <nav th:replace="~{fragments/layout.html :: navigation}"></nav>
+
+    <div class="container">
+        <article>
+            <h1>O mě</h1>
+            <div id="cont"></div>
+            <div id="hidden-con" hidden th:text="${aboutMeDto.content}"></div>
+        </article>
+    </div>
+
+    <footer th:replace="~{fragments/layout.html :: footer}"></footer>
+
+    <script>
+        let hiddenCont = document.getElementById("hidden-con")
+        let content = document.getElementById("cont");
+        content.innerHTML = hiddenCont.innerText
+    </script>
+
+</body>
+</html>

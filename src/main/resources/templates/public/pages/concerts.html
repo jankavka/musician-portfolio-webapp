@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="cs" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout.html :: head}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <nav th:replace="~{fragments/layout.html :: navigation}"></nav>
+
+    <div class="container">
+        <article >
+          <h1>Koncerty</h1>
+          <table class="table table-warning table-striped table-hover">
+            <thead>
+              <tr>
+                <th>Název akce</th>
+                <th>Kapela</th>
+                <th>Čas</th>
+                <th>Odkaz</th>
+              </tr>
+            </thead>
+            
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td><a href="" target="_blank">Odkaz na událost</a></td>
+            </tr>
+           
+          </table>
+        </article>
+      </div>
+
+    <footer th:replace="~{fragments/layout.html :: footer}"></footer>
+    
+</body>
+</html>

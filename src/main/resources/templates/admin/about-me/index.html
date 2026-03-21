@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="cs" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin-layout.html :: head}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body class="admin-body">
+    <nav th:replace="~{fragments/admin-layout.html :: navigation}"></nav>
+
+    <div class="container" style="min-height: 50dvh;">
+        <h1>O mě</h1>
+        <p id="cont" style="min-height: 50dvh;"></p>
+        <p id="hidden-con" hidden th:text="${aboutMeDto.content}" ></p>
+
+        <a th:href="@{/o-me/upravit}" class="btn btn-success align-self-end">Upravit</a>
+    </div>
+    
+
+    <footer th:replace="~{fragments/admin-layout.html :: footer}"></footer>
+
+    <script>
+        let hiddenCont = document.getElementById("hidden-con")
+        let content = document.getElementById("cont");
+        content.innerHTML = hiddenCont.innerText
+    </script>
+    
+</body>
+</html>

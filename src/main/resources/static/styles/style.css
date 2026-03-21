@@ -1,0 +1,142 @@
+@font-face {
+    font-family: "Cabin";
+    src: url("/fonts/Cabin/Cabin-VariableFont_wdth\,wght.ttf");
+}
+
+:root {
+    --bg-darker: rgb(237, 209, 130);
+    --bg-lighter: rgb(237, 224, 189);
+    --bg-admin: rgb(216, 222, 247);
+    --bd-admin-body: rgb(177, 192, 250)
+}
+
+/* navigation and general */
+
+html>* {
+    font-family: 'Cabin';
+    font-size: 1.2rem;
+}
+
+html,body{
+    height: 100%;
+}
+
+main{
+    min-height: 100%;
+    margin-bottom: -50px;
+}
+
+main:after {
+    content: "";
+    display: block;
+    height: 100px;
+}
+
+body {
+    background-color: var(--bg-darker);
+    margin: 0 auto;
+}
+
+.admin-body{
+    background-color: var(--bd-admin-body);
+    margin: 0 auto;
+}
+
+article {
+    width: 960px;
+    margin: 10px auto;
+}
+
+.active-nav {
+    border-bottom: 5px solid rgb(208, 208, 16) !important;
+}
+
+.title-image {
+    opacity: 0.5;
+    border-radius: 50%;
+    margin: 10px auto;
+}
+
+.nav-title-text {
+    text-decoration: none;
+    color: black;
+    size: 100px;
+}
+
+.main-picture {
+    text-align: center;
+}
+
+.my-bg-nav {
+    background-color: var(--bg-lighter);
+}
+
+.admin-bg-nav {
+    background-color: var(--bg-admin);
+}
+
+.my-dropdown-bg {
+    background-color: var(--bg-lighter);
+}
+
+footer {
+    height: 50px;
+    bottom: 0;
+    width: 100%;
+
+}
+
+.dev-link {
+    color: black;
+}
+
+
+
+@media (width < 767px) {
+    article {
+        max-width: fit-content;
+    }
+
+    .title-image {
+        max-width: 100px;
+    }
+}
+
+
+/* photos section */
+
+.picture-box {
+    /* grid-template-columns: repeat(2, 1fr); */
+    grid-template-columns: 1fr 1fr 1fr;
+    align-content: center;
+
+}
+
+.my-picture {
+    max-width: 200px;
+    max-height: 100px;
+}
+
+/* Contact section */
+
+.contact .contact-item{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    min-height: max-content;
+    margin: 2rem 0 2rem 0;
+}
+
+.contact .text-wrapper p{
+    margin: 0;
+    margin-left: 1rem;
+}
+
+.contact .my-icon{
+    width: 3rem;
+    height: auto;
+}
+
+.contact .mail-link{
+    color:black
+}

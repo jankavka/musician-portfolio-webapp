@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="cs" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout.html :: head}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <nav th:replace="~{fragments/layout.html :: navigation}"></nav>
+
+    <article>
+        <h1>Videa</h1>
+
+        <div>
+            <h2></h2>
+            <p class="video collapse" aria-hidden="true"></p>
+            <p class="name collapse"></p>
+        </div>
+        <div enablejsapi id="">
+        </div>
+
+    </article>
+
+    <script>
+
+        // takes elements with link to the video wich is transformed and saved just as an videos id
+        let videoIds = document.getElementsByClassName("video")
+
+        // Takes elements with video titles, which is later used as an css selector
+        let videoName = document.getElementsByClassName("name")
+
+
+        for (let i = 0; i < videoIds.length; i++) {
+          var tag = document.createElement('script');
+          tag.src = "https://www.youtube.com/player_api";
+
+          var currentScriptTag = document.getElementsByTagName('script')[i];
+          currentScriptTag.parentNode.insertBefore(tag, currentScriptTag);
+        }
+        function onYouTubePlayerAPIReady() {
+          // console.log("triggered youtube")
+          for (let j = 0; j < videoIds.length; j++) {
+            var player
+            player = new YT.Player(videoName[j].innerText, {
+              height: '360',
+              width: '640',
+              videoId: videoIds[j].innerText
+            });
+          }
+
+        }
+
+
+    </script>
+
+    <footer th:replace="~{fragments/layout.html :: footer}"></footer>
+    
+</body>
+</html>

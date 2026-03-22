@@ -1,14 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="~{fragments/admin-layout.html :: head}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body class="admin-body">
     <nav th:replace="~{fragments/admin-layout.html :: navigation}"></nav>
 
+
+    <div class="container">
+        <h1>Přidat projekt</h1>
+        <form method="post" th:action="@{/projekty/novy}" th:object="${projectDto}">
+            <div class="mb-3">
+                <label class="form-label" for="name">Jméno projektu</label>
+                <input class="form-control" id="name" type="text" th:field="*{name}"/>
+                <small class="error" th:errors="*{name}"></small>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="desc">popis</label>
+                <textarea id="desc" type="text" th:field="*{description}"></textarea>
+                <small class="error" th:errors="*{description}"></small>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="foto">foto</label>
+                <input class="form-control" id="foto" type="text" th:fields="*{photo}"/>
+            </div>
+            <div>
+                <input class="btn btn-primary" type="submit" value="Uložit">
+                <a class="btn btn-warning" href="/projekty/admin">Zpět</a>
+            </div>
+        </form>
+
+    </div>
+
     <footer th:replace="~{fragments/admin-layout.html :: footer}"></footer>
-    
+
+    <script src="../script/tinymce/tinymce.min.js"></script>
+
+    <script>
+        tinymce.init({
+            selector: '#desc',
+            license_key: 'gpl',
+            width: 900,
+            margin_bottom: 5,
+        });
+    </script>
+
 </body>
+
 </html>

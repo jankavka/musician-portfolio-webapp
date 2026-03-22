@@ -6,6 +6,7 @@ import cz.kavka.entity.repository.ProjectRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class ProjectServiceImpl implements ProjectService {
     private static final String SERVICE_NAME = "projekt";
 
     @Override
+    @Transactional
     public ProjectDto createProject(ProjectDto projectDto) {
         //TODO: photo setting
         var entityToSave = projectMapper.toEntity(projectDto);
@@ -30,6 +32,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ProjectDto getProject(Long id) {
         return projectMapper.toDto(projectRepository
                 .findById(id)
@@ -37,6 +40,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ProjectDto> getAllProjects() {
         return projectRepository
                 .findAll()
@@ -46,6 +50,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional
     public void editProject(ProjectDto projectDto, Long id) {
         var entityToEdit = projectRepository
                 .findById(id)
@@ -56,6 +61,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional
     public void deleteProject(Long id) {
         if (projectRepository.existsById(id)) {
             projectRepository.deleteById(id);

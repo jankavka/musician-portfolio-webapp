@@ -11,18 +11,12 @@
     <div class="container">
         <article>
             <h1>O mě</h1>
-            <div id="cont"></div>
-            <div id="hidden-con" hidden th:text="${aboutMeDto.content}"></div>
+            <div name="target"></div>
+            <div name="source" hidden th:text="${aboutMeDto.content}"></div>
         </article>
     </div>
 
     <footer th:replace="~{fragments/layout.html :: footer}"></footer>
-
-    <script>
-        let hiddenCont = document.getElementById("hidden-con")
-        let content = document.getElementById("cont");
-        content.innerHTML = hiddenCont.innerText
-    </script>
 
 </body>
 </html>

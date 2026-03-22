@@ -1,19 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="~{fragments/admin-layout.html :: head}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body class="admin-body">
     <nav th:replace="~{fragments/admin-layout.html :: navigation}"></nav>
+    <div class="bg-success text-center py-2 mb-2 text-light" th:text="${success}" th:if="${success}"></div>
+
 
     <div class="container">
         <h1>Projekty</h1>
+        <a class="btn btn-success mb-3" th:href="@{/projekty/novy}">Nový</a>
+        <table class="table table-secondary">
+            <thead>
+                <tr>
+                    <th>Jméno projektu</th>
+                    <th>Popis</th>
+                    <th>Foto</th>
+                    <th>Akce</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                <tr name="project" th:each="project : ${projects}">
+                    <td th:id="${'projectName' + project.id}" th:text="${project.name}"></td>
+                    <td name="target"></td>
+                    <td src="${project.photo.url}" th:alt="${project.name}"></td>
+                    <p hidden name="source" th:text="${project.description}"></p>
+                    <p hidden name="id" th:text="${project.id}"></p>
+                    <td>
+                        <a class="mb-3 btn btn-warning" th:href="@{'/projekty/upravit/' + ${project.id}}">Upravit</a>
+                        <a class="mb-3 btn btn-danger" name="deleteProject" th:id="${project.id}">Vymazat</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
 
     </div>
 
     <footer th:replace="~{fragments/admin-layout.html :: footer}"></footer>
-    
+
 </body>
+
 </html>

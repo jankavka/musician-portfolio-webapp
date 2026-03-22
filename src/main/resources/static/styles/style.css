@@ -17,11 +17,12 @@ html>* {
     font-size: 1.2rem;
 }
 
-html,body{
+html,
+body {
     height: 100%;
 }
 
-main{
+main {
     min-height: 100%;
     margin-bottom: -50px;
 }
@@ -37,7 +38,7 @@ body {
     margin: 0 auto;
 }
 
-.admin-body{
+.admin-body {
     background-color: var(--bd-admin-body);
     margin: 0 auto;
 }
@@ -119,7 +120,7 @@ footer {
 
 /* Contact section */
 
-.contact .contact-item{
+.contact .contact-item {
     display: flex;
     align-items: center;
     text-align: center;
@@ -127,16 +128,24 @@ footer {
     margin: 2rem 0 2rem 0;
 }
 
-.contact .text-wrapper p{
+.contact .text-wrapper p {
     margin: 0;
     margin-left: 1rem;
 }
 
-.contact .my-icon{
+.contact .my-icon {
     width: 3rem;
     height: auto;
 }
 
-.contact .mail-link{
-    color:black
+.contact .mail-link {
+    color: black
+}
+
+.error {
+    color: red;
+}
+
+.container {
+    min-height: 80dvh;
 }

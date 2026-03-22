@@ -10,8 +10,8 @@
 
     <div class="container" style="min-height: 50dvh;">
         <h1>O mě</h1>
-        <p id="cont" style="min-height: 50dvh;"></p>
-        <p id="hidden-con" hidden th:text="${aboutMeDto.content}" ></p>
+        <p name="target" style="min-height: 50dvh;"></p>
+        <p name="source" hidden th:text="${aboutMeDto.content}" ></p>
 
         <a th:href="@{/o-me/upravit}" class="btn btn-success align-self-end">Upravit</a>
     </div>
@@ -19,11 +19,6 @@
 
     <footer th:replace="~{fragments/admin-layout.html :: footer}"></footer>
 
-    <script>
-        let hiddenCont = document.getElementById("hidden-con")
-        let content = document.getElementById("cont");
-        content.innerHTML = hiddenCont.innerText
-    </script>
     
 </body>
 </html>

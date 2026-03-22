@@ -22,7 +22,7 @@ public class ProjectEntity {
     @Column
     String name;
 
-    @Column
+    @Column(length = 2000)
     String description;
 
     @OneToOne

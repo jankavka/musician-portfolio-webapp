@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ConcertService {
 
-    ConcertDto createConcert(ConcertDto concertDto);
+    void createConcert(ConcertDto concertDto);
 
     ConcertDto getConcert(Long id);
 

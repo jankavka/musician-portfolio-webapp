@@ -45,3 +45,5 @@ about-me/*
 **/static/icons/*
 !**/static/icons/.gitkeep
 !**/static/pictures/.gitkeep
+photos/*
+!photos/.gitkeep

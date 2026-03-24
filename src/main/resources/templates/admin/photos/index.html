@@ -7,9 +7,13 @@
 </head>
 <body class="admin-body">
     <nav th:replace="~{fragments/admin-layout.html :: navigation}"></nav>
+    <div class="bg-success text-center py-2 mb-2 text-light" th:if="${success}" th:text="${success}"></div>
+    <div class="bg-danger text-center py-2 mb-2 text-light" th:if="${error}" th:text="${error}"></div>
 
     <div class="container">
         <h1>Fotky</h1>
+        <a class="btn btn-success" th:href="@{/foto/novy}">Nová fotka</a>
+        <a class="btn btn-warning" th:href="@{/album/novy}">Nové album</a>
 
     </div>
 

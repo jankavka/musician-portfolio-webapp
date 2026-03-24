@@ -1,8 +1,6 @@
 package cz.kavka.service;
 
 import cz.kavka.dto.ConcertDto;
-import cz.kavka.dto.mapper.ProjectMapper;
-import cz.kavka.entity.repository.ProjectRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,13 +8,11 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class ConcertServiceImpl implements ConcertService{
-
+public class ConcertServiceImpl implements ConcertService {
 
 
     @Override
-    public ConcertDto createConcert(ConcertDto concertDto) {
-        return null;
+    public void createConcert(ConcertDto concertDto) {
     }
 
     @Override

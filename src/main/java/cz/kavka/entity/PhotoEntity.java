@@ -24,6 +24,10 @@ public class PhotoEntity {
     @Column
     String url;
 
+    @ManyToOne
+    @JoinColumn(name = "album_id")
+    AlbumEntity album;
+
     @OneToOne(mappedBy = "photo")
     ProjectEntity project;
 

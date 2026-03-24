@@ -10,6 +10,8 @@ public record PhotoDto (
 
         String url,
 
+        AlbumDto album,
+
         ProjectDto project
 ) {
 }

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragments/admin-layout.html :: head}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body class="admin-body">
+    <nav th:replace="~{fragments/admin-layout.html :: navigation}"></nav>
+
+    <div th:if="${error}" th:text="${error}" class="bg-danger text-center py-2 mb-2 text-light"></div>
+
+    <div class="container">
+        <div class="d-flex align-items-center">
+            <h1>Přidat fotku</h1>
+            <small class="ms-3" th:if="${albums.isEmpty()}">Nejprve <a th:href="@{/album/novy}">vytvořte album</a></small>
+        </div>
+        <form th:action="@{/foto/novy}" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label class="form-label" for="alba">Vyberte album</label>
+                <select class="form-select" name="id" id="alba">
+                    <option value="" >Vyberte možnost</option>
+                    <option th:each="album : ${albums}" th:text="${album.name}" th:value="${album.id}"></option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="files">Vyberte soubor</label>
+                <input class="form-control" type="file" id="photo" name="files" multiple>
+            </div>
+            <div class="mb-3">
+                <input class="btn btn-success" type="submit" value="Uložit">
+                <a class="btn btn-warning" th:href="@{/foto/admin}">Zpět</a>
+            </div>
+
+        </form>
+
+    </div>
+
+    <footer th:replace="~{fragments/admin-layout.html :: footer}"></footer>
+
+</body>
+
+</html>

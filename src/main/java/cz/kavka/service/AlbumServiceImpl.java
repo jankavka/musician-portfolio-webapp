@@ -131,6 +131,7 @@ public class AlbumServiceImpl implements AlbumService {
         albumToEdit.setAlbumPath(photosPath + normalizedAlbumName);
     }
 
+
     private void deleteAlbumDir(AlbumEntity album) {
         File file = new File(album.getAlbumPath());
 

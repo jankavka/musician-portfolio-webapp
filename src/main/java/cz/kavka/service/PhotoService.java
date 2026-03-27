@@ -1,6 +1,7 @@
 package cz.kavka.service;
 
 import cz.kavka.dto.PhotoDto;
+import cz.kavka.entity.PhotoEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface PhotoService {
 
     List<PhotoDto> getAllPhotos();
 
-    List<PhotoDto> getAllPhotosByAlbum(Long albumId);
+    List<PhotoEntity> getAllPhotosByAlbum(Long albumId);
 
     void editPhoto(PhotoDto photoDto, Long id);
 

@@ -45,4 +45,32 @@ public class AlbumController {
         albumService.createAlbum(albumDto, files);
         return "redirect:/admin/foto";
     }
+
+    @GetMapping("/admin/album/upravit/{id}")
+    public String renderEditForm(Model model, @PathVariable Long id){
+        var album = albumService.getAlbum(id);
+        model.addAttribute("album", album);
+        return "admin/photos/edit-album";
+    }
+
+
+    @PostMapping("/admin/album/upravit/{id}")
+    public String editAlbum(@PathVariable Long id, AlbumDto albumDto, BindingResult result, RedirectAttributes attributes){
+        if(result.hasErrors()){
+            return "/admin/photos/edit-album";
+        }
+        albumService.editAlbumInfo(albumDto,id);
+        attributes.addFlashAttribute("success", "Album upraveno");
+
+        return "redirect:/admin/foto";
+
+    }
+
+    @GetMapping("/admin/album/vymazat/{id}")
+    public String deleteAlbum(@PathVariable Long id, RedirectAttributes attributes){
+        albumService.deleteAlbum(id);
+        attributes.addFlashAttribute("success", "Album úspěšně vymazáno");
+
+        return "redirect:/admin/foto";
+    }
 }

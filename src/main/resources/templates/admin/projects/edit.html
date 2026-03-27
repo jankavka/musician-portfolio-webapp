@@ -9,7 +9,7 @@
     <nav th:replace="~{fragments/admin-layout.html :: navigation}"></nav>
 
     <div class="container">
-        <h1>Přidat projekt</h1>
+        <h1>Upravit projekt</h1>
         <form method="post" th:action="@{'/projekty/upravit/' + ${projectDto.id}}" th:object="${projectDto}">
             <div class="mb-3">
                 <label class="form-label" for="name">Jméno projektu</label>
@@ -18,7 +18,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label" for="desc">popis</label>
-                <textarea name="desc" type="text" th:field="*{description}"></textarea>
+                <textarea name="desc" id="desc" type="text" th:field="*{description}"></textarea>
                 <small class="error" th:errors="*{description}"></small>
             </div>
             <div class="mb-3">
@@ -27,7 +27,7 @@
             </div>
             <div>
                 <input class="btn btn-primary" type="submit" value="Uložit">
-                <a class="btn btn-warning" href="/projekty/admin">Zpět</a>
+                <a class="btn btn-warning" href="/admin/projekty">Zpět</a>
             </div>
         </form>
 
@@ -35,18 +35,17 @@
 
     <footer th:replace="~{fragments/admin-layout.html :: footer}"></footer>
 
-    <script src="../../script/tinymce/tinymce.min.js"></script>
+    <script src="/../../script/tinymce/tinymce.min.js"></script>
 
     <script>
         tinymce.init({
-            selector: '#des',
+            selector: '#desc',
             license_key: 'gpl',
             width: 900,
         });
     </script>
 
 
-    <footer th:replace="~{fragments/admin-layout.html :: footer}"></footer>
     
 </body>
 </html>

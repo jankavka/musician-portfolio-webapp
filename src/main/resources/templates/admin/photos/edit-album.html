@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="cs" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/admin-layout.html :: head}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body class="admin-body">
+    <nav th:replace="~{fragments/admin-layout.html :: navigation}"></nav>
+
+    <div class="container">
+        <form method="post" th:action="@{'/admin/album/upravit/' + ${album.id} }" th:object="${album}" enctype="multipart/form-data">
+            <h1>Upravit album</h1>
+            <div class="mb-3">
+                <label class="form-label" for="name">Jméno alba</label>
+                <input autocomplete="off" class="form-control" id="name" type="text" th:field="*{name}">
+                <small th:errors="*{name}" class="error"></small>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="desc">Popis</label>
+                <input class="form-control" id="desc" type="text" th:field="*{description}">
+                <small th:errors="*{description}" class="error"></small>
+            </div>
+            <div class="mb-3">
+                <input class="btn btn-success" type="submit" value="Uložit">
+                <a class="btn btn-warning" id="back" th:href="@{/admin/foto}">Zpět</a>
+            </div>
+
+        </form>
+
+
+    </div>
+
+
+    <footer th:replace="~{fragments/admin-layout.html :: footer}"></footer>
+
+    
+</body>
+</html>

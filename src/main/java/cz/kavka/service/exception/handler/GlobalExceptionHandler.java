@@ -26,13 +26,15 @@ public class GlobalExceptionHandler {
 
     private static final String REDIRECT = "redirect:";
 
+    private static final String SOMETHING_WRONG = "Něco se pokazilo... ";
+
     @ExceptionHandler(MultipartFilesEmptyException.class)
     public String handleMultipartFilesEmpty(
             MultipartFilesEmptyException e, RedirectAttributes redirectAttributes) {
 
         log.error(e.getMessage());
         redirectAttributes.addFlashAttribute(ERROR, e.getMessage());
-        return "redirect:/foto/novy";
+        return REDIRECT + ADMIN_PHOTO_NEW;
     }
 
     @ExceptionHandler(NullPointerException.class)
@@ -44,7 +46,7 @@ public class GlobalExceptionHandler {
             attributes.addFlashAttribute(MISSING_FILE, e.getMessage());
             return REDIRECT + req.getRequestURI();
         }
-        attributes.addFlashAttribute(ERROR, "Něco se pokazilo");
+        attributes.addFlashAttribute(ERROR, SOMETHING_WRONG);
         return REDIRECT_PHOTO_ADMIN;
     }
 
@@ -58,7 +60,7 @@ public class GlobalExceptionHandler {
             attributes.addFlashAttribute(ERROR, "Album musí být vybráno");
             return REDIRECT + req.getRequestURI();
         }
-        attributes.addFlashAttribute(ERROR, "Něco se pokazilo");
+        attributes.addFlashAttribute(ERROR, SOMETHING_WRONG);
         return REDIRECT_PHOTO_ADMIN;
     }
 
@@ -73,7 +75,7 @@ public class GlobalExceptionHandler {
             return REDIRECT + req.getRequestURI();
 
         }
-        attributes.addFlashAttribute(ERROR, "Internal Server Error: Upload size exceeded");
+        attributes.addFlashAttribute(ERROR, SOMETHING_WRONG);
         return REDIRECT_PHOTO_ADMIN;
 
     }
@@ -87,7 +89,7 @@ public class GlobalExceptionHandler {
             return REDIRECT + req.getRequestURI();
         }
 
-        attributes.addFlashAttribute(ERROR, "Něco se pokazilo");
+        attributes.addFlashAttribute(ERROR, SOMETHING_WRONG);
         return REDIRECT_PHOTO_ADMIN;
 
     }

@@ -32,7 +32,7 @@
                     <p hidden name="source" th:text="${project.description}"></p>
                     <p hidden name="id" th:text="${project.id}"></p>
                     <td>
-                        <a class="mb-3 btn btn-outline-warning" th:href="@{'/projekty/upravit/' + ${project.id}}">Upravit</a>
+                        <a class="mb-3 btn btn-outline-warning" th:href="@{'/admin/projekty/upravit/' + ${project.id}}">Upravit</a>
                         <a class="mb-3 btn btn-outline-danger" name="deleteButton" th:id="${project.id}">Vymazat</a>
                     </td>
                 </tr>

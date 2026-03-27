@@ -12,4 +12,8 @@ public interface AlbumService {
     AlbumDto getAlbum(Long id);
 
     List<AlbumDto> getAllAlbums();
+
+    void editAlbumInfo(AlbumDto albumDto, Long id);
+
+    void deleteAlbum(Long albumId);
 }

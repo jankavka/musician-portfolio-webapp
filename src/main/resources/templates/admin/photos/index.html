@@ -33,7 +33,7 @@
                         <td>
                             <a class="btn btn-outline-info" th:href="@{'/admin/album/' + ${album.id}}">Detail</a>
                             <a class="btn btn-outline-danger" name="deleteButton" th:id="${album.id}">Vymazat</a>
-                            <a class="btn btn-outline-warning">Upravit</a>
+                            <a class="btn btn-outline-warning" th:href="@{'/admin/album/upravit/' + ${album.id}}">Upravit</a>
                         </td>
                     </tr>
 

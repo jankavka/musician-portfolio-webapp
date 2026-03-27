@@ -66,6 +66,7 @@ public class PhotoServiceImpl implements PhotoService {
 
     }
 
+    @Transactional(readOnly = true)
     @Override
     public PhotoDto getPhoto(Long id) {
         return photoMapper
@@ -75,6 +76,7 @@ public class PhotoServiceImpl implements PhotoService {
                                 () -> new EntityNotFoundException(entityNotFoundExceptionMessage(SERVICE_NAME, id))));
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<PhotoDto> getAllPhotos() {
         return photoRepository
@@ -83,15 +85,16 @@ public class PhotoServiceImpl implements PhotoService {
                 .map(photoMapper::toDto).toList();
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public List<PhotoDto> getAllPhotosByAlbum(Long albumId) {
+    public List<PhotoEntity> getAllPhotosByAlbum(Long albumId) {
         return photoRepository
                 .getAllPhotosByAlbumId(albumId)
                 .stream()
-                .map(photoMapper::toDto)
                 .toList();
     }
 
+    @Transactional
     @Override
     public void editPhoto(PhotoDto photoDto, Long id) {
         var entityToUpdate = photoRepository

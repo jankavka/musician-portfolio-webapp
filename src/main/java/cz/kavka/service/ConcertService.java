@@ -12,7 +12,7 @@ public interface ConcertService {
 
     List<ConcertDto> getAllConcerts();
 
-    void editConcert(Long id);
+    void editConcert(ConcertDto concertDto, Long id);
 
     void deleteConcert(Long id);
 

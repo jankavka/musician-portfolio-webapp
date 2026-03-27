@@ -13,7 +13,7 @@
 
     <div class="container">
         <h1>Přidat projekt</h1>
-        <form method="post" th:action="@{/projekty/novy}" th:object="${projectDto}">
+        <form method="post" th:action="@{/admin/projekty/novy}" th:object="${projectDto}">
             <div class="mb-3">
                 <label class="form-label" for="name">Jméno projektu</label>
                 <input class="form-control" id="name" type="text" th:field="*{name}"/>
@@ -30,7 +30,7 @@
             </div>
             <div>
                 <input class="btn btn-primary" type="submit" value="Uložit">
-                <a class="btn btn-warning" href="/projekty/admin">Zpět</a>
+                <a class="btn btn-warning" href="/admin/projekty">Zpět</a>
             </div>
         </form>
 
@@ -38,7 +38,7 @@
 
     <footer th:replace="~{fragments/admin-layout.html :: footer}"></footer>
 
-    <script src="../script/tinymce/tinymce.min.js"></script>
+    <script src="../../script/tinymce/tinymce.min.js"></script>
 
     <script>
         tinymce.init({

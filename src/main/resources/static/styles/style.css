@@ -149,3 +149,9 @@ footer {
 .container {
     min-height: 80dvh;
 }
+
+.my-card{
+    max-width: 20dvh;
+    margin-right: 3rem;
+    
+}

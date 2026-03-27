@@ -1,23 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="~{fragments/admin-layout.html :: head}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body class="admin-body">
     <nav th:replace="~{fragments/admin-layout.html :: navigation}"></nav>
-    <div class="bg-success text-center py-2 mb-2 text-light" th:if="${success}" th:text="${success}"></div>
-    <div class="bg-danger text-center py-2 mb-2 text-light" th:if="${error}" th:text="${error}"></div>
+    <div class="alert alert-success text-center py-2 mb-2" th:if="${success}" th:text="${success}"></div>
+    <div class="alert alert-danger text-center py-2 mb-2" th:if="${error}" th:text="${error}"></div>
 
     <div class="container">
         <h1>Fotky</h1>
-        <a class="btn btn-success" th:href="@{/foto/novy}">Nová fotka</a>
-        <a class="btn btn-warning" th:href="@{/album/novy}">Nové album</a>
+        <div class="mb-3">
+            <a class="btn btn-success" th:href="@{/admin/foto/novy}">Nová fotka</a>
+            <a class="btn btn-warning" th:href="@{/admin/album/novy}">Nové album</a>
+        </div>
+
+        <div>
+            <table class="table">
+                <thead>
+                    <th>Název alba</th>
+                    <th>Popis alba</th>
+                    <th>Akce</th>
+                </thead>
+                <tbody>
+                    <tr th:each="album : ${albums}">
+                        <td th:id="${'entity' + album.id}" th:text="${album.name}"></td>
+                        <td th:text="${album.description}"></td>
+                        <td>
+                            <a class="btn btn-outline-info" th:href="@{'/admin/album/' + ${album.id}}">Detail</a>
+                            <a class="btn btn-outline-danger" name="deleteButton" th:id="${album.id}">Vymazat</a>
+                            <a class="btn btn-outline-warning">Upravit</a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 
     </div>
 
     <footer th:replace="~{fragments/admin-layout.html :: footer}"></footer>
-    
+
 </body>
+
 </html>

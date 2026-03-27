@@ -11,12 +11,12 @@ document.addEventListener("DOMContentLoaded", function () {
     ["/kontakty", "contact"],
     ["/o-me", "about_me"],
     ["/admin", "home"],
-    ["/projekty/admin", "projects"],
-    ["/foto/admin", "media"],
-    ["/video/admin", "media"],
-    ["/koncerty/admin", "concerts"],
-    ["/kontakty/admin", "contact"],
-    ["/o-me/admin", "about_me"],
+    ["/admin/projekty", "projects"],
+    ["/admin/foto/admin", "media"],
+    ["/admin/video/admin", "media"],
+    ["/admin/koncerty", "concerts"],
+    ["/admin/kontakty", "contact"],
+    ["/admin/o-me", "about_me"],
   ]);
 
   // adding css class to element
@@ -41,8 +41,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const listOfLocations = [
     "/o-me",
     "/projekty",
-    "/o-me/admin",
-    "/projekty/admin",
+    "/admin/o-me",
+    "/admin/projekty",
   ];
 
   for (const loc of listOfLocations) {
@@ -51,21 +51,91 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  const deleteProjectButtons = document.getElementsByName("deleteProject");
+  /**
+   * This method adds delete functionality to delete buttons on page
+   */
+  const addDeleteFunctionality = () => {
+    const deleteButtons = document.getElementsByName("deleteButton");
 
-  //this cycle adds to every delete button its functionality
-  for (let button of deleteProjectButtons) {
-    button.addEventListener("click", () => {
-      let id = button.getAttribute("id");
-      let projectName = document.getElementById("projectName" + id).innerText;
-      let consent = confirm("Opravdu chcete vymazat projekt " + projectName);
-      if (consent) {
-        let realDelete = document.createElement("a");
-        realDelete.setAttribute("href", "/projekty/vymazat/" + id);
-        document.body.appendChild(realDelete);
-        realDelete.click();
-        document.body.removeChild(realDelete);
+    const deleteUrls = new Map([
+      ["projekty", "/admin/projekty/vymazat/"],
+      ["album", "/admin/foto/vymazat/"],
+      ["foto", "/admin/album/vymazat/"],
+    ]);
+
+    const entitiesNames = ["projekt", "album", "foto"];
+
+    const setHref = () => {
+      for (const [key, value] of deleteUrls.entries()) {
+        if (currentLocation.includes(key)) {
+          console.log(value);
+          return value;
+        }
       }
-    });
-  }
+    };
+
+    const setEntity = () => {
+      for (const entity of entitiesNames) {
+        if (currentLocation.includes(entity)) {
+          return entity;
+        }
+      }
+    };
+
+    //this cycle adds to every delete button from projects its functionality
+    for (let button of deleteButtons) {
+      button.addEventListener("click", () => {
+        let id = button.getAttribute("id");
+        let entityName = document.getElementById("entity" + id).innerText;
+        let consent = confirm(
+          "Opravdu chcete vymazat " + setEntity() + " " + entityName + " " + id
+        );
+        if (consent) {
+          let realDelete = document.createElement("a");
+          realDelete.setAttribute("href", setHref() + id);
+          document.body.appendChild(realDelete);
+          realDelete.click();
+          document.body.removeChild(realDelete);
+        }
+      });
+    }
+  };
+
+  addDeleteFunctionality();
+
+  /**
+   * This method fill form, after file exception on server,
+   * with previous values
+   */
+  const renderFormFields_AfterFileException = () => {
+    if (currentLocation === "/album/novy") {
+      let nameElement = document.getElementById("name");
+      let descElement = document.getElementById("desc");
+      let nameValue = localStorage.getItem("nameValue");
+      let descValue = localStorage.getItem("descValue");
+
+      nameElement.addEventListener("change", (e) => {
+        nameValue = e.target.value;
+        localStorage.setItem("nameValue", nameValue);
+      });
+
+      descElement.addEventListener("change", (e) => {
+        descValue = e.target.value;
+        localStorage.setItem("descValue", descValue);
+      });
+
+      if (nameValue || descValue) {
+        nameElement.value = nameValue;
+        descElement.value = descValue;
+      }
+
+      let backButton = document.getElementById("back");
+      backButton.addEventListener("click", () => {
+        localStorage.removeItem("nameValue");
+        localStorage.removeItem("descValue");
+      });
+    }
+  };
+
+  renderFormFields_AfterFileException();
 });

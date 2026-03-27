@@ -8,12 +8,15 @@ import cz.kavka.entity.repository.PhotoRepository;
 import cz.kavka.service.normalize.StringNormalizer;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,6 +24,7 @@ import static cz.kavka.service.exception.message.ExceptionMessage.entityNotFound
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PhotoServiceImpl implements PhotoService {
 
     private final PhotoRepository photoRepository;
@@ -38,7 +42,7 @@ public class PhotoServiceImpl implements PhotoService {
     @Override
     public void savePhoto(MultipartFile[] files, Long albumId) {
         for (MultipartFile file : files) {
-            if (file != null) {
+            if (file != null && !file.isEmpty()) {
                 var fileName = StringNormalizer.getNormalizedString(
                         (Objects.requireNonNull(file.getOriginalFilename())), true);
                 var suffix = Objects.requireNonNull(file.getOriginalFilename()).split("\\.")[1];
@@ -56,7 +60,7 @@ public class PhotoServiceImpl implements PhotoService {
 
                 photoRepository.save(entityToSave);
             } else {
-                throw new NullPointerException();
+                throw new NullPointerException("Soubory nesmí být prázdné");
             }
         }
 
@@ -97,10 +101,11 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
+    @Transactional
     public void deletePhoto(Long id) {
-        if (photoRepository.existsById(id)) {
-            photoRepository.deleteById(id);
-        }
+        deletePhotoFile(id);
+        photoRepository.deleteById(id);
+
     }
 
     private void savePhotoFile(MultipartFile file, File photo) {
@@ -116,9 +121,24 @@ public class PhotoServiceImpl implements PhotoService {
             }
             outputStream.flush();
 
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+    }
+
+
+    private void deletePhotoFile(Long id) {
+        var photoEntity = photoRepository
+                .findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(entityNotFoundExceptionMessage(SERVICE_NAME, id)));
+
+        var url = photoEntity.getUrl();
+
+        try {
+            Files.deleteIfExists(Path.of(url));
 
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new NullPointerException("Soubor nenalezen");
         }
     }
 }

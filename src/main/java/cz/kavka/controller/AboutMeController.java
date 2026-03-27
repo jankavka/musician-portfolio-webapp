@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/o-me")
 @RequiredArgsConstructor
 public class AboutMeController {
 
@@ -18,27 +17,27 @@ public class AboutMeController {
 
     private static final String ABOUT_ME = "aboutMeDto";
 
-    @GetMapping
+    @GetMapping("/o-me")
     public String renderAboutMe(Model model) {
         model.addAttribute(ABOUT_ME, aboutMeService.getInfo());
         return "public/pages/about-me";
     }
 
-    @GetMapping("/admin")
+    @GetMapping("/admin/o-me")
     public String renderAdminAboutMe(Model model) {
         AboutMeDto aboutMeDto = aboutMeService.getInfo();
         model.addAttribute(ABOUT_ME, aboutMeDto);
         return "admin/about-me/index";
     }
 
-    @PostMapping("/admin")
+    @PostMapping("/admin/o-me/upravit")
     public String updateAboutMe(AboutMeDto aboutMeDto) {
         aboutMeService.editInfo(aboutMeDto);
 
         return "redirect:/o-me/admin";
     }
 
-    @GetMapping("/upravit")
+    @GetMapping("/admin/o-me/upravit")
     public String renderEditForm(Model model) {
         model.addAttribute(ABOUT_ME, aboutMeService.getInfo());
         return "admin/about-me/edit";

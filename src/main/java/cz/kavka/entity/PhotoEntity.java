@@ -25,7 +25,7 @@ public class PhotoEntity {
     String url;
 
     @ManyToOne
-    @JoinColumn(name = "album_id")
+    @JoinColumn(name = "album_id", referencedColumnName = "id")
     AlbumEntity album;
 
     @OneToOne(mappedBy = "photo")

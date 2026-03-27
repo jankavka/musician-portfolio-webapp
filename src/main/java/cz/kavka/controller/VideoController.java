@@ -5,25 +5,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/video")
 public class VideoController {
 
-    @GetMapping
+    @GetMapping("/video")
     public String renderVideo(){
         return "public/pages/videos";
     }
 
-    @GetMapping("/admin")
+    @GetMapping("/admin/video")
     public String renderAdminVideo(){
         return "admin/videos/index";
     }
 
-    @GetMapping("/admin/novy")
+    @GetMapping("/admin/video/novy")
     public String renderCreateForm(){
         return "admin/videos/create";
     }
 
-    @GetMapping("/admin/upravit")
+    @GetMapping("/admin/video/upravit")
     public String renderEditForm(){
         return "admin/videos/edit";
     }

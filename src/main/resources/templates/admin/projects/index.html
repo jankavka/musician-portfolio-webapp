@@ -9,12 +9,12 @@
 
 <body class="admin-body">
     <nav th:replace="~{fragments/admin-layout.html :: navigation}"></nav>
-    <div class="bg-success text-center py-2 mb-2 text-light" th:text="${success}" th:if="${success}"></div>
+    <div class="alert alert-success text-center py-2 mb-2" th:text="${success}" th:if="${success}"></div>
 
 
     <div class="container">
         <h1>Projekty</h1>
-        <a class="btn btn-success mb-3" th:href="@{/projekty/novy}">Nový</a>
+        <a class="btn btn-success mb-3" th:href="@{/admin/projekty/novy}">Nový</a>
         <table class="table table-secondary">
             <thead>
                 <tr>
@@ -26,14 +26,14 @@
             </thead>
             <tbody class="table-group-divider">
                 <tr name="project" th:each="project : ${projects}">
-                    <td th:id="${'projectName' + project.id}" th:text="${project.name}"></td>
+                    <td th:id="${'entity' + project.id}" th:text="${project.name}"></td>
                     <td name="target"></td>
                     <td src="${project.photo.url}" th:alt="${project.name}"></td>
                     <p hidden name="source" th:text="${project.description}"></p>
                     <p hidden name="id" th:text="${project.id}"></p>
                     <td>
-                        <a class="mb-3 btn btn-warning" th:href="@{'/projekty/upravit/' + ${project.id}}">Upravit</a>
-                        <a class="mb-3 btn btn-danger" name="deleteProject" th:id="${project.id}">Vymazat</a>
+                        <a class="mb-3 btn btn-outline-warning" th:href="@{'/projekty/upravit/' + ${project.id}}">Upravit</a>
+                        <a class="mb-3 btn btn-outline-danger" name="deleteButton" th:id="${project.id}">Vymazat</a>
                     </td>
                 </tr>
             </tbody>

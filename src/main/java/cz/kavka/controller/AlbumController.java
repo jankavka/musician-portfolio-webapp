@@ -6,37 +6,43 @@ import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping("/album")
 @RequiredArgsConstructor
 public class AlbumController {
 
     private final AlbumService albumService;
 
-    @GetMapping("/novy")
-    public String renderCreateAlbumForm(AlbumDto albumDto){
+    @GetMapping("/admin/album/novy")
+    public String renderCreateAlbumForm(AlbumDto albumDto) {
         return "admin/photos/create-album";
     }
 
-    @PostMapping("/novy")
+    @GetMapping("/admin/album/{id}")
+    public String getAdminAlbumDetail(Model model, @PathVariable Long id) {
+        var album = albumService.getAlbum(id);
+        model.addAttribute("album", album);
+
+        return "admin/photos/album-detail";
+    }
+
+
+    @PostMapping("/admin/album/novy")
     public String createNewAlbum(
             @Valid AlbumDto albumDto,
-            @Nullable @RequestParam("files")MultipartFile[] files,
             BindingResult result,
-            RedirectAttributes attributes){
-        if(result.hasErrors()){
+            @Nullable @RequestParam("files") MultipartFile[] files,
+            RedirectAttributes attributes) {
+        if (result.hasErrors()) {
             return renderCreateAlbumForm(albumDto);
         }
-        attributes.addFlashAttribute("success","Album vytvořeno");
-        albumService.createAlbum(albumDto,files);
-        return "redirect:/foto/admin";
+        attributes.addFlashAttribute("success", "Album vytvořeno");
+        albumService.createAlbum(albumDto, files);
+        return "redirect:/admin/foto";
     }
 }

@@ -6,6 +6,7 @@ import cz.kavka.entity.repository.AlbumRepository;
 import cz.kavka.service.normalize.StringNormalizer;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,13 +15,14 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
+
 import java.util.List;
 
 import static cz.kavka.service.exception.message.ExceptionMessage.entityNotFoundExceptionMessage;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AlbumServiceImpl implements AlbumService {
 
     private final PhotoService photoService;
@@ -44,7 +46,7 @@ public class AlbumServiceImpl implements AlbumService {
         try {
             Files.createDirectory(Path.of(albumPath));
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            log.error(e.getMessage());
         }
 
         var albumEntityToSave = albumMapper.toEntity(albumDto);

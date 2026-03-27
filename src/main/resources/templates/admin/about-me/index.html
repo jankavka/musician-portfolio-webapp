@@ -10,10 +10,11 @@
 
     <div class="container" style="min-height: 50dvh;">
         <h1>O mě</h1>
+        <a th:href="@{/o-me/upravit}" class="btn btn-success align-self-end mb-3">Upravit</a>
         <p name="target" style="min-height: 50dvh;"></p>
         <p name="source" hidden th:text="${aboutMeDto.content}" ></p>
 
-        <a th:href="@{/o-me/upravit}" class="btn btn-success align-self-end">Upravit</a>
+        
     </div>
     
 

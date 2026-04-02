@@ -1,28 +1,93 @@
 package cz.kavka.controller;
 
+import cz.kavka.dto.ConcertDto;
+import cz.kavka.service.ConcertService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.support.BindingAwareModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
+@RequiredArgsConstructor
 public class ConcertsController {
 
+    private final ConcertService concertService;
+
     @GetMapping("/koncerty")
-    public String renderConcerts(){
+    public String renderConcerts(Model model) {
+        var allConcerts = concertService.getAllConcerts();
+        model.addAttribute("concerts", allConcerts);
         return "public/pages/concerts";
     }
 
     @GetMapping("/admin/koncerty")
-    public String renderAdminConcerts(){
+    public String renderAdminConcerts(Model model) {
+        var allConcerts = concertService.getAllConcerts();
+        model.addAttribute("concerts", allConcerts);
         return "admin/concerts/index";
     }
 
+    @GetMapping("/admin/koncerty/{id}")
+    public String renderConcertDetail(@PathVariable Long id, Model model) {
+        var concert = concertService.getConcert(id);
+        model.addAttribute("concert", concert);
+        return "/admin/concerts/detail";
+    }
+
     @GetMapping("/admin/koncerty/novy")
-    public String renderCreateForm(){
+    public String renderCreateForm(ConcertDto concertDto) {
+
         return "admin/concerts/create";
     }
 
-    @GetMapping("/admin/koncerty/upravit")
-    public String renderEditForm(){
+    @PostMapping("/admin/koncerty/novy")
+    public String createConcert(@Valid ConcertDto concertDto, BindingResult result, RedirectAttributes attributes) {
+        if (result.hasErrors()) {
+            return renderCreateForm(concertDto);
+        }
+        concertService.createConcert(concertDto);
+        attributes.addFlashAttribute(
+                "success", "Koncert s názvem " + concertDto.name() + " úspěšně vytvořen");
+        return "redirect:/admin/koncerty";
+    }
+
+    @GetMapping("/admin/koncerty/upravit/{id}")
+    public String renderEditForm(@PathVariable Long id, Model model) {
+        var concert = concertService.getConcert(id);
+        model.addAttribute("concertDto", concert);
         return "admin/concerts/edit";
+    }
+
+    @PostMapping("/admin/koncerty/upravit/{id}")
+    public String editConcert(
+            @PathVariable Long id,
+            @Valid ConcertDto concertDto,
+            BindingResult result,
+            RedirectAttributes attributes) {
+
+        if (result.hasErrors()) {
+            Model model = new BindingAwareModelMap();
+            model.addAttribute("concertDto", concertDto);
+            return renderEditForm(id, model);
+        }
+        concertService.editConcert(concertDto, id);
+        attributes.addFlashAttribute(
+                "success", "Koncert s názvem" + concertDto.name() + " úspěšně upraven");
+        return "redirect:/admin/koncerty";
+
+    }
+
+
+    @GetMapping("/admin/koncerty/vymazat/{id}")
+    public String deleteConcert(@PathVariable Long id, RedirectAttributes attributes) {
+        concertService.deleteConcert(id);
+        attributes.addFlashAttribute("success", "Koncert úspěšně vymazán");
+        return "redirect:/admin/koncerty";
     }
 }

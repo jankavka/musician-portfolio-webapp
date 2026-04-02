@@ -10,7 +10,6 @@
 <body class="admin-body">
     <nav th:replace="~{fragments/admin-layout.html :: navigation}"></nav>
 
-
     <div class="container">
         <h1>Přidat projekt</h1>
         <form method="post" th:action="@{/admin/projekty/novy}" th:object="${projectDto}">

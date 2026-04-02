@@ -11,10 +11,11 @@
     <div class="container">
         <article>
             <h1 class="mb-3">Projekty</h1>
-            <div class="row">
+            <div th:each="project : ${projects}" class="row">
                 <div class="col">
-                    <h3 class="text-uppercase"></h3>
-                    <p></p>
+                    <h3 th:text="${project.name}" class="text-uppercase"></h3>
+                    <div hidden name="source"  th:text="${project.description}"></div>
+                    <div name="target"></div>
 
                 </div>
                 <div>
@@ -26,6 +27,6 @@
     </div>
 
     <footer th:replace="~{fragments/layout.html :: footer}"></footer>
-    
+
 </body>
 </html>

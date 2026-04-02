@@ -31,4 +31,7 @@ public class ConcertEntity {
 
     @Column
     private String linkToEvent;
+
+    @Transient
+    private String formattedTime;
 }

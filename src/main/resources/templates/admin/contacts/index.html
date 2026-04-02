@@ -1,19 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="~{fragments/admin-layout.html :: head}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body class="admin-body">
     <nav th:replace="~{fragments/admin-layout.html :: navigation}"></nav>
 
-    <div class="container">
-        <h1>Kontakty</h1>
+    <div class="container my-admin-height">
+        <article>
+            <h1>Kontakty</h1>
+            <div class="mb-3">
+                <a class="btn btn-success" th:href="@{/admin/kontakty/upravit}">Upravit</a>
+            </div>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>Telefonní číslo</td>
+                        <td th:text="${contactDto.telNumber}"></td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td th:text="${contactDto.email}"></td>
+                    </tr>
+                </tbody>
+            </table>
 
+        </article>
     </div>
 
     <footer th:replace="~{fragments/admin-layout.html :: footer}"></footer>
-    
+
 </body>
+
 </html>

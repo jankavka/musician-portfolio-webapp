@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/admin-layout.html :: head}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +7,28 @@
 </head>
 <body class="admin-body">
     <nav th:replace="~{fragments/admin-layout.html :: navigation}"></nav>
+    <div class="container">
+        <h1>Upravit kontakt</h1>
+        <form method="post" th:action="@{/admin/kontakty/upravit}" th:object="${contactDto}">
+            <div class="mb-3">
+                <label class="form-label" for="tel-number">Telefonní číslo</label>
+                <input class="form-control" id="tel-number" type="text" th:field="*{telNumber}">
+                <small class="error" th:errors="*{telNumber}"></small>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="eamil">Email</label>
+                <input class="form-control" id="email" type="text" th:field="*{email}">
+                <small class="error" th:errors="*{email}"></small>
+            </div>
+            <div class="mb-3">
+                <input class="btn btn-success" type="submit" value="Uložit">
+                <a class="btn btn-warning" th:href="@{/admin/kontakty}">Zpět</a>
+            </div>
+
+        </form>
+    </div>
 
     <footer th:replace="~{fragments/admin-layout.html :: footer}"></footer>
-    
+
 </body>
 </html>

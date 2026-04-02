@@ -8,6 +8,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.Comparator;
 import java.util.List;
 
 import static cz.kavka.service.exception.message.ExceptionMessage.entityNotFoundExceptionMessage;
@@ -33,18 +37,31 @@ public class ConcertServiceImpl implements ConcertService {
     @Transactional(readOnly = true)
     @Override
     public ConcertDto getConcert(Long id) {
-        return concertMapper.toDto(concertRepository
+        var concertEntity = concertRepository
                 .findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(entityNotFoundExceptionMessage(SERVICE_NAME, id))));
+                .orElseThrow(() -> new EntityNotFoundException(entityNotFoundExceptionMessage(SERVICE_NAME, id)));
+        //System.out.println(concertEntity.getStartDateTime().format(DateTimeFormatter.ofLocalizedPattern("")));
+
+        concertEntity.setFormattedTime(DateTimeFormatter
+                .ofLocalizedDateTime(FormatStyle.LONG, FormatStyle.SHORT)
+                .format(concertEntity.getStartDateTime()));
+
+        return concertMapper.toDto(concertEntity);
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<ConcertDto> getAllConcerts() {
-        return concertRepository
-                .findAll()
+        var allConcerts = concertRepository.findAll();
+        allConcerts.forEach(concertEntity -> concertEntity
+                .setFormattedTime(DateTimeFormatter
+                        .ofLocalizedDateTime(FormatStyle.LONG, FormatStyle.SHORT)
+                        .format(concertEntity.getStartDateTime())));
+
+        return allConcerts
                 .stream()
                 .map(concertMapper::toDto)
+                .sorted(Comparator.comparing(ConcertDto::startDateTime))
                 .toList();
     }
 
@@ -67,5 +84,11 @@ public class ConcertServiceImpl implements ConcertService {
         } else {
             throw new EntityNotFoundException(entityNotFoundExceptionMessage(SERVICE_NAME, id));
         }
+    }
+
+    public String formattedTime(LocalDateTime time) {
+        return DateTimeFormatter
+                .ofLocalizedDateTime(FormatStyle.LONG, FormatStyle.SHORT)
+                .format(time);
     }
 }

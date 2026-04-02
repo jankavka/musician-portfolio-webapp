@@ -1,24 +1,29 @@
 <!DOCTYPE html>
 <html lang="cs" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="~{fragments/layout.html :: head}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-<nav th:replace="~{fragments/layout.html :: navigation}"></nav>
+    <nav th:replace="~{fragments/layout.html :: navigation}"></nav>
 
-<article>
-    <h1>Fotky</h1>
-    <div class="picture-box d-grid gap-3">
-        <a data-fslightbox href="">
-            <img class="my-picture" src="" alt="">
-        </a>
+    <div class="container">
+        <article>
+            <h1>Fotky</h1>
+            <div class="picture-box d-grid gap-3">
+                <a data-fslightbox href="">
+                    <img class="my-picture" src="" alt="">
+                </a>
 
+            </div>
+        </article>
     </div>
-</article>
 
-<footer th:replace="~{fragments/layout.html :: footer}"></footer>
-
+    <footer th:replace="~{fragments/layout.html :: footer}"></footer>
+    <script src="/../../script/fslightbox-basic-3.7.4/fslightbox.js"></script>
 </body>
+
 </html>

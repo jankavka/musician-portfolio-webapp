@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="cs" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout.html :: head}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Registrace</h1>
+        <form method="post" th:action="@{/registration}" th:object="${userDto}">
+            <div class="mb-3">
+                <label class="form-label" for="email">Email</label>
+                <input class="form-control" type="text" id="eamil" th:field="*{email}">
+                <small class="error" th:errors="*{email}"></small>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="password">Password</label>
+                <input class="form-control" type="password" id="password" th:field="*{password}">
+                <small class="error" th:errors="*{password}"></small>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="password2">Password</label>
+                <input class="form-control" type="password" id="password2">
+            </div>
+            <div class="mb-3">
+                <input class="btn btn-primary" type="submit" value="Registrovat">
+            </div>
+        </form>
+
+    </div>
+    <footer th:replace="~{fragments/layout.html :: footer}"></footer>
+</body>
+
+</html>

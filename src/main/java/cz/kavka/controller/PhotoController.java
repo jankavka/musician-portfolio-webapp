@@ -6,10 +6,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import static cz.kavka.constant.ConstantNameResolver.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,14 +24,14 @@ public class PhotoController {
     public String renderPhotos(Model model) {
         var allPhotos = photoService.getAllPhotos();
         model.addAttribute("allPhotos", allPhotos);
-        return "public/pages/photos";
+        return PHOTO_INDEX_PUBLIC_TEMPLATE;
     }
 
     @GetMapping("/admin/foto")
     public String renderAdminPhotos(Model model) {
         var allAlbums = albumService.getAllAlbums();
         model.addAttribute("albums", allAlbums);
-        return "admin/photos/index";
+        return PHOTO_INDEX_ADMIN_TEMPLATE;
     }
 
     @GetMapping("/admin/foto/novy")
@@ -38,7 +39,7 @@ public class PhotoController {
             Model model) {
         var allAlbums = albumService.getAllAlbums();
         model.addAttribute("albums", allAlbums);
-        return "admin/photos/create-photo";
+        return PHOTO_CREATE_ADMIN_TEMPLATE;
     }
 
     @PostMapping("/admin/foto/novy")
@@ -47,9 +48,9 @@ public class PhotoController {
             @RequestPart("files") MultipartFile[] multipartFiles,
             RedirectAttributes attributes
     ) {
-        attributes.addFlashAttribute("success", "Foto úspěšně uloženo");
+        attributes.addFlashAttribute(SUCCESS, "Foto úspěšně uloženo");
         photoService.savePhoto(multipartFiles, albumId);
-        return "redirect:/admin/foto";
+        return REDIRECT + PHOTO_INDEX_ADMIN;
 
     }
 
@@ -57,7 +58,7 @@ public class PhotoController {
     public String deletePhoto(@PathVariable Long id, RedirectAttributes attributes, HttpServletRequest req) {
         var albumId = photoService.getPhoto(id).album().id();
         photoService.deletePhoto(id);
-        attributes.addFlashAttribute("success", "Fotka úspěšně vymazána");
-        return "redirect:/admin/album/" + albumId;
+        attributes.addFlashAttribute(SUCCESS, "Fotka úspěšně vymazána");
+        return REDIRECT + ALBUM_DETAIL_ADMIN + albumId;
     }
 }

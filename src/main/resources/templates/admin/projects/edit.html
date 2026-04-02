@@ -10,7 +10,7 @@
 
     <div class="container">
         <h1>Upravit projekt</h1>
-        <form method="post" th:action="@{'/projekty/upravit/' + ${projectDto.id}}" th:object="${projectDto}">
+        <form method="post" th:action="@{'/admin/projekty/upravit/' + ${projectDto.id}}" th:object="${projectDto}">
             <div class="mb-3">
                 <label class="form-label" for="name">Jméno projektu</label>
                 <input class="form-control" name="name" type="text" th:field="*{name}"/>
@@ -46,6 +46,6 @@
     </script>
 
 
-    
+
 </body>
 </html>

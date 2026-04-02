@@ -1,14 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="~{fragments/admin-layout.html :: head}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body class="admin-body">
     <nav th:replace="~{fragments/admin-layout.html :: navigation}"></nav>
 
+    <div class="container">
+        <h1>Nový koncert</h1>
+        <form method="post" th:action="@{/admin/koncerty/novy}" th:object="${concertDto}" >
+            <div class="mb-3">
+                <label class="form-label" for="name">Název akce</label>
+                <input class="form-control" id="name" type="text" th:field="*{name}">
+                <small class="error" th:errors="*{name}"></small>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="band">Kapela</label>
+                <input class="form-control" id="band" type="text" th:field="*{band}">
+                <small class="error" th:errors="*{band}"></small>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="date">Datum a čas začátku</label>
+                <input class="form-control" id="date" type="datetime-local" th:field="*{startDateTime}">
+                <small class="error" th:errors="*{startDateTime}"></small>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="link">Odkaz</label>
+                <input class="form-control" id="link" type="text" th:field="*{linkToEvent}">
+                <small></small>
+            </div>
+            <div class="mb-3">
+                <input class="btn btn-primary" type="submit" value="Uložit"/>
+                <a class="btn btn-warning" th:href="@{/admin/koncerty}">Zpět</a>
+            </div>
+        </form>
+
+    </div>
+
     <footer th:replace="~{fragments/admin-layout.html :: footer}"></footer>
-    
+
 </body>
+
 </html>

@@ -43,6 +43,10 @@ body {
     margin: 0 auto;
 }
 
+.admin-body .my-admin-height{
+    min-height: 70dvh;
+}
+
 article {
     width: 960px;
     margin: 10px auto;
@@ -153,5 +157,5 @@ footer {
 .my-card{
     max-width: 20dvh;
     margin-right: 3rem;
-    
+
 }

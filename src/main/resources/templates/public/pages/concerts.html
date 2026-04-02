@@ -20,19 +20,19 @@
                 <th>Odkaz</th>
               </tr>
             </thead>
-            
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td><a href="" target="_blank">Odkaz na událost</a></td>
+
+            <tr th:each="concert : ${concerts}">
+              <td th:text="${concert.name}"></td>
+              <td th:text="${concert.band}"></td>
+              <td th:text="${concert.formattedTime}"></td>
+              <td><a th:href="@{concert.linkToEvent}" th:text="${concert.linkToEvent}" target="_blank"></a></td>
             </tr>
-           
+
           </table>
         </article>
       </div>
 
     <footer th:replace="~{fragments/layout.html :: footer}"></footer>
-    
+
 </body>
 </html>

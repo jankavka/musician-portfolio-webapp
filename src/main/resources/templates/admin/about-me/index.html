@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang="cs" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="~{fragments/admin-layout.html :: head}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body class="admin-body">
+
+<body class="admin-body my-admin-height">
     <nav th:replace="~{fragments/admin-layout.html :: navigation}"></nav>
 
     <div class="container" style="min-height: 50dvh;">
-        <h1>O mě</h1>
-        <a th:href="@{/o-me/upravit}" class="btn btn-success align-self-end mb-3">Upravit</a>
-        <p name="target" style="min-height: 50dvh;"></p>
-        <p name="source" hidden th:text="${aboutMeDto.content}" ></p>
-
-        
+        <article>
+            <h1>O mě</h1>
+            <a th:href="@{/admin/o-me/upravit}" class="btn btn-success align-self-end mb-3">Upravit</a>
+            <p name="target" style="min-height: 50dvh;"></p>
+            <p name="source" hidden th:text="${aboutMeDto.content}"></p>
+        </article>
     </div>
-    
 
     <footer th:replace="~{fragments/admin-layout.html :: footer}"></footer>
 
-    
 </body>
+
 </html>

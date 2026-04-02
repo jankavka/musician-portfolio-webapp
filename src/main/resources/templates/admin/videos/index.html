@@ -1,19 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="~{fragments/admin-layout.html :: head}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body class="admin-body">
+
+<body class="admin-body my-admin-height" style="min-height: 50dvh;">
     <nav th:replace="~{fragments/admin-layout.html :: navigation}"></nav>
 
-    <div class="container">
-        <h1>Videa</h1>
+    <div class="container my-admin-height">
+        <article>
+            <h1>Videa</h1>
+        </article>
 
     </div>
 
     <footer th:replace="~{fragments/admin-layout.html :: footer}"></footer>
-    
+
 </body>
+
 </html>

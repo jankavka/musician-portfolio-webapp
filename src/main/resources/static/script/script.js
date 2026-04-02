@@ -61,6 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
       ["projekty", "/admin/projekty/vymazat/"],
       ["album", "/admin/foto/vymazat/"],
       ["foto", "/admin/album/vymazat/"],
+      ["koncerty", "/admin/koncerty/vymazat/"],
     ]);
 
     const entitiesNames = ["projekt", "album", "foto"];
@@ -108,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
    * with previous values
    */
   const renderFormFields_AfterFileException = () => {
-    if (currentLocation === "/album/novy") {
+    if (currentLocation === "/admin/album/novy") {
       let nameElement = document.getElementById("name");
       let descElement = document.getElementById("desc");
       let nameValue = localStorage.getItem("nameValue");
@@ -138,4 +139,27 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   renderFormFields_AfterFileException();
+
+
+  //adds functionality for logout button
+  const logoutHandler = () => {
+    if (currentLocation.includes("/admin") && !currentLocation.includes("logout")) {
+      const logoutForm = document.getElementById("logout-form");
+      const logoutButton = document.getElementById("logout-button");
+      const realLogoutButton = document.createElement("input");
+
+      logoutButton.addEventListener("click", () => {
+        let consent = confirm("Opravdu se chcete odlásit?");
+
+        if (consent) {
+          realLogoutButton.setAttribute("type", "submit");
+          logoutForm.appendChild(realLogoutButton);
+          realLogoutButton.click();
+          logoutForm.removeChild(realLogoutButton);
+        }
+      });
+    }
+  };
+
+  logoutHandler();
 });

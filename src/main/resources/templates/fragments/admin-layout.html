@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
-    <script src="/../../script/script.js" ></script>
+    <script src="/../../script/script.js"></script>
     <link rel="stylesheet" href="/../../styles/style.css" type="text/css" />
     <link rel="icon" href="/../../icons/keyboard-icon.png">
 
@@ -28,8 +28,15 @@
                         <small>Jazzový pianista a skladatel</small>
                     </a>
                 </div>
-                <div>
+                <div class="text-center" style="border: 1px solid black; padding: 5px;">
                     <h1>ADMIN PANEL</h1>
+                    <div class="d-flex justify-content-between">
+                        <form id="logout-form" method="post" th:action="@{/admin/logout}">
+                            <button type="button" id="logout-button" class="btn btn-secondary"
+                                value="Odhlásit">Odhlásit</button>
+                        </form>
+                        <a class="btn btn-secondary" th:href="@{/admin/profil}">Profil</a>
+                    </div>
                 </div>
                 <button class="navbar-toggler align-self-start" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"

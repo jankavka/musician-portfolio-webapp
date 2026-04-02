@@ -8,20 +8,20 @@
 <body>
     <nav th:replace="~{fragments/layout.html :: navigation}"></nav>
 
-    <div>
+    <div class="container">
         <article class="contact">
             <h1>Kontakt</h1>
             <div>
                 <div class="contact-item">
                     <img class="my-icon" src="icons/email-icon.svg" alt="email" >
                     <div class="text-wrapper">
-                        <p class="text-center"><a class="mail-link" href=""></a></p>
+                        <p class="text-center"><a class="mail-link" th:text="${contactDto.email}" th:href="@{'mailto:' + ${contactDto.email}}"></a></p>
                     </div>
                 </div>
                 <div class="contact-item">
                     <img class="my-icon" src="icons/telephone-icon.svg" alt="tel">
                     <div class="text-wrapper">
-                        <p></p>
+                        <p class="text-center" th:text="${contactDto.telNumber}"></p>
                     </div>
                 </div>
             </div>
@@ -29,6 +29,6 @@
     </div>
 
     <footer th:replace="~{fragments/layout.html :: footer}"></footer>
-    
+
 </body>
 </html>

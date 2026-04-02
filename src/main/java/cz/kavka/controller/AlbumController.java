@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import static cz.kavka.constant.ConstantNameResolver.*;
+
 @Controller
 @RequiredArgsConstructor
 public class AlbumController {
@@ -20,7 +22,7 @@ public class AlbumController {
 
     @GetMapping("/admin/album/novy")
     public String renderCreateAlbumForm(AlbumDto albumDto) {
-        return "admin/photos/create-album";
+        return ALBUM_CREATE_ADMIN_TEMPLATE;
     }
 
     @GetMapping("/admin/album/{id}")
@@ -28,7 +30,7 @@ public class AlbumController {
         var album = albumService.getAlbum(id);
         model.addAttribute("album", album);
 
-        return "admin/photos/album-detail";
+        return ALBUM_DETAIL_ADMIN_TEMPLATE;
     }
 
 
@@ -41,36 +43,40 @@ public class AlbumController {
         if (result.hasErrors()) {
             return renderCreateAlbumForm(albumDto);
         }
-        attributes.addFlashAttribute("success", "Album vytvořeno");
+        attributes.addFlashAttribute(SUCCESS, "Album s názvem " + albumDto.name() + " vytvořeno");
         albumService.createAlbum(albumDto, files);
-        return "redirect:/admin/foto";
+        return REDIRECT + PHOTO_INDEX_ADMIN;
     }
 
     @GetMapping("/admin/album/upravit/{id}")
-    public String renderEditForm(Model model, @PathVariable Long id){
+    public String renderEditForm(Model model, @PathVariable Long id) {
         var album = albumService.getAlbum(id);
         model.addAttribute("album", album);
-        return "admin/photos/edit-album";
+        return ALBUM_EDIT_ADMIN_TEMPLATE;
     }
 
 
     @PostMapping("/admin/album/upravit/{id}")
-    public String editAlbum(@PathVariable Long id, AlbumDto albumDto, BindingResult result, RedirectAttributes attributes){
-        if(result.hasErrors()){
-            return "/admin/photos/edit-album";
+    public String editAlbum(
+            @PathVariable Long id,
+            AlbumDto albumDto,
+            BindingResult result,
+            RedirectAttributes attributes) {
+        if (result.hasErrors()) {
+            return ALBUM_EDIT_ADMIN_TEMPLATE;
         }
-        albumService.editAlbumInfo(albumDto,id);
-        attributes.addFlashAttribute("success", "Album upraveno");
+        albumService.editAlbumInfo(albumDto, id);
+        attributes.addFlashAttribute(SUCCESS, "Album s názvem " + albumDto.name() + " upraveno");
 
-        return "redirect:/admin/foto";
+        return REDIRECT + PHOTO_INDEX_ADMIN;
 
     }
 
     @GetMapping("/admin/album/vymazat/{id}")
-    public String deleteAlbum(@PathVariable Long id, RedirectAttributes attributes){
+    public String deleteAlbum(@PathVariable Long id, RedirectAttributes attributes) {
         albumService.deleteAlbum(id);
-        attributes.addFlashAttribute("success", "Album úspěšně vymazáno");
+        attributes.addFlashAttribute(SUCCESS, "Album úspěšně vymazáno");
 
-        return "redirect:/admin/foto";
+        return REDIRECT + PHOTO_INDEX_ADMIN;
     }
 }

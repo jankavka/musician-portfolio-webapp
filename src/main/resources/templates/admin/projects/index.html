@@ -7,40 +7,40 @@
     <title>Document</title>
 </head>
 
-<body class="admin-body">
+<body class="admin-body my-admin-height" >
     <nav th:replace="~{fragments/admin-layout.html :: navigation}"></nav>
     <div class="alert alert-success text-center py-2 mb-2" th:text="${success}" th:if="${success}"></div>
 
 
-    <div class="container">
-        <h1>Projekty</h1>
-        <a class="btn btn-success mb-3" th:href="@{/admin/projekty/novy}">Nový</a>
-        <table class="table table-secondary">
-            <thead>
-                <tr>
-                    <th>Jméno projektu</th>
-                    <th>Popis</th>
-                    <th>Foto</th>
-                    <th>Akce</th>
-                </tr>
-            </thead>
-            <tbody class="table-group-divider">
-                <tr name="project" th:each="project : ${projects}">
-                    <td th:id="${'entity' + project.id}" th:text="${project.name}"></td>
-                    <td name="target"></td>
-                    <td src="${project.photo.url}" th:alt="${project.name}"></td>
-                    <p hidden name="source" th:text="${project.description}"></p>
-                    <p hidden name="id" th:text="${project.id}"></p>
-                    <td>
-                        <a class="mb-3 btn btn-outline-warning" th:href="@{'/admin/projekty/upravit/' + ${project.id}}">Upravit</a>
-                        <a class="mb-3 btn btn-outline-danger" name="deleteButton" th:id="${project.id}">Vymazat</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-
-
+    <div class="container my-admin-height">
+        <article>
+            <h1>Projekty</h1>
+            <a class="btn btn-success mb-3" th:href="@{/admin/projekty/novy}">Nový</a>
+            <table class="table table-secondary">
+                <thead>
+                    <tr>
+                        <th>Jméno projektu</th>
+                        <th>Popis</th>
+                        <th>Foto</th>
+                        <th>Akce</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    <tr name="project" th:each="project : ${projects}">
+                        <td th:id="${'entity' + project.id}" th:text="${project.name}"></td>
+                        <td name="target"></td>
+                        <td src="${project.photo.url}" th:alt="${project.name}"></td>
+                        <p hidden name="source" th:text="${project.description}"></p>
+                        <p hidden name="id" th:text="${project.id}"></p>
+                        <td>
+                            <a class="mb-3 btn btn-outline-warning"
+                                th:href="@{'/admin/projekty/upravit/' + ${project.id}}">Upravit</a>
+                            <a class="mb-3 btn btn-outline-danger" name="deleteButton" th:id="${project.id}">Vymazat</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </article>
     </div>
 
     <footer th:replace="~{fragments/admin-layout.html :: footer}"></footer>

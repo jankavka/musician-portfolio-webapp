@@ -7,39 +7,42 @@
     <title>Document</title>
 </head>
 
-<body class="admin-body">
+<body class="admin-body ">
     <nav th:replace="~{fragments/admin-layout.html :: navigation}"></nav>
     <div class="alert alert-success text-center py-2 mb-2" th:if="${success}" th:text="${success}"></div>
     <div class="alert alert-danger text-center py-2 mb-2" th:if="${error}" th:text="${error}"></div>
 
-    <div class="container">
-        <h1>Fotky</h1>
-        <div class="mb-3">
-            <a class="btn btn-success" th:href="@{/admin/foto/novy}">Nová fotka</a>
-            <a class="btn btn-warning" th:href="@{/admin/album/novy}">Nové album</a>
-        </div>
+    <div class="container my-admin-height">
+        <article>
+            <h1>Fotky</h1>
+            <div class="mb-3">
+                <a class="btn btn-success" th:href="@{/admin/foto/novy}">Nová fotka</a>
+                <a class="btn btn-warning" th:href="@{/admin/album/novy}">Nové album</a>
+            </div>
 
-        <div>
-            <table class="table">
-                <thead>
-                    <th>Název alba</th>
-                    <th>Popis alba</th>
-                    <th>Akce</th>
-                </thead>
-                <tbody>
-                    <tr th:each="album : ${albums}">
-                        <td th:id="${'entity' + album.id}" th:text="${album.name}"></td>
-                        <td th:text="${album.description}"></td>
-                        <td>
-                            <a class="btn btn-outline-info" th:href="@{'/admin/album/' + ${album.id}}">Detail</a>
-                            <a class="btn btn-outline-danger" name="deleteButton" th:id="${album.id}">Vymazat</a>
-                            <a class="btn btn-outline-warning" th:href="@{'/admin/album/upravit/' + ${album.id}}">Upravit</a>
-                        </td>
-                    </tr>
+            <div>
+                <table class="table">
+                    <thead>
+                        <th>Název alba</th>
+                        <th>Popis alba</th>
+                        <th>Akce</th>
+                    </thead>
+                    <tbody>
+                        <tr th:each="album : ${albums}">
+                            <td th:id="${'entity' + album.id}" th:text="${album.name}"></td>
+                            <td th:text="${album.description}"></td>
+                            <td>
+                                <a class="btn btn-outline-info" th:href="@{'/admin/album/' + ${album.id}}">Detail</a>
+                                <a class="btn btn-outline-warning"
+                                    th:href="@{'/admin/album/upravit/' + ${album.id}}">Upravit</a>
+                                <a class="btn btn-outline-danger" name="deleteButton" th:id="${album.id}">Vymazat</a>
+                            </td>
+                        </tr>
 
-                </tbody>
-            </table>
-        </div>
+                    </tbody>
+                </table>
+            </div>
+        </article>
     </div>
 
 

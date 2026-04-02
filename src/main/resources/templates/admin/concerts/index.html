@@ -1,19 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs" xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="~{fragments/admin-layout.html :: head}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body class="admin-body">
-    <nav th:replace="~{fragments/admin-layout.html :: navigation}"></nav>
 
-    <div class="container">
-        <h1>Koncerty</h1>
+<body class="admin-body" style="min-height: 50dvh;">
+    <nav th:replace="~{fragments/admin-layout.html :: navigation}"></nav>
+    <div class="alert alert-success text-center" th:if="${success}" th:text="${success}"></div>
+
+    <div class="container my-admin-height">
+        <article>
+            <h1>Koncerty</h1>
+            <a class="btn btn-success mb-3" th:href="@{/admin/koncerty/novy}">Nový</a>
+            <table class="table table-responsive">
+                <thead>
+                    <th>Název akce</th>
+                    <th>Kapela</th>
+                    <th>Čas</th>
+                    <th>Akce</th>
+                </thead>
+                <tbody>
+                    <tr th:each="concert : ${concerts}">
+                        <td th:id="${'entity' + concert.id}" th:text="${concert.name}"></td>
+                        <td th:text="${concert.band}"></td>
+                        <td th:text="${concert.formattedTime}"></td>
+                        <td>
+                            <a class="btn btn-outline-info" th:href="@{'/admin/koncerty/' + ${concert.id}}">Detail</a>
+                            <a class="btn btn-outline-warning"
+                                th:href="@{'/admin/koncerty/upravit/' + ${concert.id}}">Upravit</a>
+                            <a class="btn btn-outline-danger" th:id="${concert.id}" name="deleteButton">Vymazat</a>
+                        </td>
+
+                    </tr>
+
+                </tbody>
+            </table>
+        </article>
 
     </div>
 
     <footer th:replace="~{fragments/admin-layout.html :: footer}"></footer>
-    
+
 </body>
+
 </html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="cs" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout.html :: head}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container mt-5 text-center">
+        <article>
+            Nastala neočekávaná chyba
+            <div>
+                <a class="btn btn-primary" th:href="@{/}">Úvodní strana</a>
+            </div>
+        </article>
+    </div>
+
+    <footer th:replace="~{fragments/layout.html :: footer}"></footer>
+
+</body>
+
+
+
+</html>

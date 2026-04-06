@@ -28,15 +28,8 @@
                         <small>Jazzový pianista a skladatel</small>
                     </a>
                 </div>
-                <div class="text-center" style="border: 1px solid black; padding: 5px;">
+                <div class="text-center">
                     <h1>ADMIN PANEL</h1>
-                    <div class="d-flex justify-content-between">
-                        <form id="logout-form" method="post" th:action="@{/admin/logout}">
-                            <button type="button" id="logout-button" class="btn btn-secondary"
-                                value="Odhlásit">Odhlásit</button>
-                        </form>
-                        <a class="btn btn-secondary" th:href="@{/admin/profil}">Profil</a>
-                    </div>
                 </div>
                 <button class="navbar-toggler align-self-start" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -46,6 +39,21 @@
                 <div class="me-5 mt-lg-0 text-start align-self-start align-self-lg-center text-align-center">
                     <div class="collapse navbar-collapse text-align-cente" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false" id="profile">Profil</a>
+                                <ul class="dropdown-menu my-dropdown-bg">
+                                    <li><a class="dropdown-item" th:href="@{/admin/profil}">Profil</a></li>
+                                    <li>
+                                        <form class="dropdown-item" id="logout-form" method="post" th:action="@{/admin/logout}">
+                                            <button type="button" id="logout-button" class="btn btn-secondary"
+                                                value="Odhlásit">Odhlásit</button>
+                                        </form>
+
+                                    </li>
+
+                                </ul>
+                            </li>
                             <li class="nav-item"><a class="nav-link" href="/admin" id="home">Úvod</a></li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/admin/projekty" id="projects">Projekty</a>
@@ -54,7 +62,7 @@
                                 <a class="nav-link" href="/admin/o-me" id="about_me">O mě</a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="" role="button" data-bs-toggle="dropdown"
+                                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
                                     aria-expanded="false" id="media">Média</a>
                                 <ul class="dropdown-menu my-dropdown-bg ">
                                     <li><a class="dropdown-item " href="/admin/foto">Fotky</a></li>

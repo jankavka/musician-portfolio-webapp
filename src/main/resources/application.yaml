@@ -28,3 +28,6 @@ contacts:
 about-me:
   path: "about-me/"
   json-file: "about-me.json"
+projects:
+  path: "project-photos/"
+  resource: "file:/Users/mpmp/it_projects/musician-portfolio-page/project-photos"

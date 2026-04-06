@@ -2,14 +2,12 @@ package cz.kavka.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record PhotoDto (
+public record VideoDto(
         Long id,
 
-        @NotBlank
-        String name,
-
+        @NotBlank(message = "Toto pole nesmí být prázdné")
         String url,
 
-        AlbumDto album
+        String videoYoutubeId
 ) {
 }

@@ -12,6 +12,8 @@ import org.springframework.validation.support.BindingAwareModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import static cz.kavka.constant.ConstantNameResolver.*;
@@ -37,16 +39,21 @@ public class ProjectsController {
     }
 
     @GetMapping("/admin/projekty/novy")
-    public String renderCreateForm(ProjectDto projectDto) {
+    public String renderCreateForm(ProjectDto projectDto, MultipartFile file) {
         return PROJECT_CREATE_ADMIN_TEMPLATE;
     }
 
     @PostMapping("/admin/projekty/novy")
-    public String createProject(@Valid ProjectDto projectDto, BindingResult result, RedirectAttributes attributes) {
+    public String createProject(
+            @RequestPart("file") MultipartFile file,
+            @Valid ProjectDto projectDto,
+            BindingResult result,
+            RedirectAttributes attributes) {
+
         if (result.hasErrors()) {
             return PROJECT_CREATE_ADMIN_TEMPLATE;
         }
-        projectService.createProject(projectDto);
+        projectService.createProject(projectDto, file);
         attributes.addFlashAttribute(ConstantNameResolver.SUCCESS, "Projekt vytvořen");
         return REDIRECT + PROJECTS_HOME_ADMIN;
     }
@@ -60,6 +67,7 @@ public class ProjectsController {
 
     @PostMapping("/admin/projekty/upravit/{id}")
     public String updateProject(
+            @RequestPart("file") MultipartFile file,
             @Valid ProjectDto projectDto,
             BindingResult result,
             RedirectAttributes attributes,
@@ -71,7 +79,7 @@ public class ProjectsController {
         }
         attributes.addFlashAttribute(
                 SUCCESS, "Projekt s názvem " + projectDto.name() + " upraven");
-        projectService.editProject(projectDto, id);
+        projectService.editProject(projectDto, file, id);
         return REDIRECT + PROJECTS_HOME_ADMIN;
     }
 

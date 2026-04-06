@@ -1,6 +1,7 @@
 package cz.kavka.service.exception.handler;
 
 import cz.kavka.service.exception.MultipartFilesEmptyException;
+import cz.kavka.service.exception.WrongVideoSourceException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.MailException;
@@ -22,19 +23,24 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MultipartFilesEmptyException.class)
     public String handleMultipartFilesEmpty(
-            MultipartFilesEmptyException e, RedirectAttributes redirectAttributes) {
+            MultipartFilesEmptyException e,
+            RedirectAttributes redirectAttributes
+    ) {
 
-        log.error(e.getMessage());
+        log.error(ERROR_MESSAGE_TEMPLATE, e.getMessage(), e.getClass());
         redirectAttributes.addFlashAttribute(ERROR, e.getMessage());
         return REDIRECT + PHOTO_CREATE_ADMIN;
     }
 
     @ExceptionHandler(NullPointerException.class)
     public String handleNullPointerException(
-            NullPointerException e, RedirectAttributes attributes, HttpServletRequest req) {
+            NullPointerException e,
+            RedirectAttributes attributes,
+            HttpServletRequest req
+    ) {
 
-        log.error(e.getMessage());
-        if (req.getRequestURI().equals(PHOTO_CREATE_ADMIN)) {
+        log.error(ERROR_MESSAGE_TEMPLATE, e.getMessage(), e.getClass());
+        if (req.getRequestURI().equals(PHOTO_CREATE_ADMIN) || req.getRequestURI().equals(PROJECT_CREATE_ADMIN)) {
             attributes.addFlashAttribute(MISSING_FILE, e.getMessage());
             return REDIRECT + req.getRequestURI();
         }
@@ -44,9 +50,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public String handleMissingServletRequestParameterException(
-            MissingServletRequestParameterException e, RedirectAttributes attributes, HttpServletRequest req) {
+            MissingServletRequestParameterException e,
+            RedirectAttributes attributes,
+            HttpServletRequest req
+    ) {
 
-        log.error(e.getMessage());
+        log.error(ERROR_MESSAGE_TEMPLATE, e.getMessage(), e.getClass());
         if (req.getRequestURI().equals(PHOTO_CREATE_ADMIN)) {
 
             attributes.addFlashAttribute(ERROR, "Album musí být vybráno");
@@ -58,9 +67,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({MaxUploadSizeExceededException.class})
     public String handleMaxUploadSizeExceededException(
-            MaxUploadSizeExceededException e, RedirectAttributes attributes, HttpServletRequest req) {
+            MaxUploadSizeExceededException e,
+            RedirectAttributes attributes,
+            HttpServletRequest req
+    ) {
 
-        log.error(e.getMessage());
+        log.error(ERROR_MESSAGE_TEMPLATE, e.getMessage(), e.getClass());
         if (req.getRequestURI().equals(ALBUM_CREATE_ADMIN) || req.getRequestURI().equals(PHOTO_CREATE_ADMIN)) {
             attributes.addFlashAttribute(ERROR, "Maximální velikost pro nahrávání souborů je 10 MB");
 
@@ -74,8 +86,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalStateException.class)
     public String handleIllegalStateException(
-            IllegalStateException e, RedirectAttributes attributes, HttpServletRequest req) {
-        log.error(e.getMessage());
+            IllegalStateException e,
+            RedirectAttributes attributes,
+            HttpServletRequest req
+    ) {
+
+        log.error(ERROR_MESSAGE_TEMPLATE, e.getMessage(), e.getClass());
         if (req.getRequestURI().equals(PHOTO_CREATE_ADMIN)) {
             attributes.addFlashAttribute(MISSING_FILE, "Soubor musí být vybrán");
             return REDIRECT + req.getRequestURI();
@@ -90,7 +106,7 @@ public class GlobalExceptionHandler {
     public String handleInternalAthServiceException(AuthenticationException e, RedirectAttributes attributes) {
         log.error("Auth error");
         attributes.addFlashAttribute("error", e.getMessage());
-        return REDIRECT + "/login";
+        return REDIRECT + USER_LOGIN;
     }
 
     @ExceptionHandler(MailException.class)
@@ -98,7 +114,21 @@ public class GlobalExceptionHandler {
         log.error(e.getMessage());
         attributes.addFlashAttribute(
                 "error", "Nepodařilo se odeslat mail s novým heslem. Zkuste to znovu");
-        return REDIRECT + "/login";
+        return REDIRECT + USER_LOGIN;
+    }
+
+
+    @ExceptionHandler(WrongVideoSourceException.class)
+    public String handleWrongVideoSourceException(
+            WrongVideoSourceException e,
+            RedirectAttributes attributes
+    ) {
+
+        log.error(ERROR_MESSAGE_TEMPLATE, e.getMessage(), e.getClass());
+        attributes.addFlashAttribute(ERROR, e.getMessage());
+        return REDIRECT + VIDEO_ADMIN_CREATE;
+
+
     }
 
 

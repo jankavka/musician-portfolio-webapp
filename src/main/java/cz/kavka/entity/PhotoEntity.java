@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "photo")
+@Table(name = "photos")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -27,9 +27,6 @@ public class PhotoEntity {
     @ManyToOne
     @JoinColumn(name = "album_id", referencedColumnName = "id")
     AlbumEntity album;
-
-    @OneToOne(mappedBy = "photo")
-    ProjectEntity project;
 
 
 }

@@ -5,6 +5,7 @@ import cz.kavka.dto.mapper.PhotoMapper;
 import cz.kavka.entity.PhotoEntity;
 import cz.kavka.entity.repository.AlbumRepository;
 import cz.kavka.entity.repository.PhotoRepository;
+import cz.kavka.service.files.MyFilesUtils;
 import cz.kavka.service.normalize.StringNormalizer;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,6 +31,8 @@ public class PhotoServiceImpl implements PhotoService {
     private final AlbumRepository albumRepository;
 
     private final PhotoMapper photoMapper;
+
+    private final MyFilesUtils filesUtils;
 
     private static final String SERVICE_NAME = "Fotka";
 
@@ -51,7 +52,7 @@ public class PhotoServiceImpl implements PhotoService {
 
                 File photo = new File(relatedAlbum.getAlbumPath() + File.separator + fileName + "." + suffix);
 
-                savePhotoFile(file, photo);
+                filesUtils.savePhotoFile(file, photo);
 
                 var entityToSave = new PhotoEntity();
                 entityToSave.setUrl(photo.getPath());
@@ -106,42 +107,14 @@ public class PhotoServiceImpl implements PhotoService {
     @Override
     @Transactional
     public void deletePhoto(Long id) {
-        deletePhotoFile(id);
-        photoRepository.deleteById(id);
-
-    }
-
-    private void savePhotoFile(MultipartFile file, File photo) {
-        try (InputStream inputStream = file.getInputStream();
-             OutputStream outputStream = new FileOutputStream(photo)) {
-
-            byte[] buffer = new byte[1024];
-            int length;
-
-            while ((length = inputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, length);
-
-            }
-            outputStream.flush();
-
-        } catch (IOException e) {
-            log.error(e.getMessage());
-        }
-    }
-
-
-    private void deletePhotoFile(Long id) {
         var photoEntity = photoRepository
                 .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(entityNotFoundExceptionMessage(SERVICE_NAME, id)));
 
         var url = photoEntity.getUrl();
+        filesUtils.deletePhotoFile(url);
+        photoRepository.deleteById(id);
 
-        try {
-            Files.deleteIfExists(Path.of(url));
-
-        } catch (IOException e) {
-            throw new NullPointerException("Soubor nenalezen");
-        }
     }
+
 }

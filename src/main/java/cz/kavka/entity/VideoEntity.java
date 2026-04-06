@@ -6,27 +6,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name = "projects")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProjectEntity {
-
+@Entity
+@Table(name = "videos")
+public class VideoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
-    private String name;
-
-    @Column(length = 2000)
-    private String description;
+    private String url;
 
     @Column
-    private String photoUrl;
-
-
+    private String videoYoutubeId;
 }

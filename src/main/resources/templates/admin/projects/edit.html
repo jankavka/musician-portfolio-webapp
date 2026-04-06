@@ -22,8 +22,9 @@
                 <small class="error" th:errors="*{description}"></small>
             </div>
             <div class="mb-3">
-                <label class="form-label" for="foto">foto</label>
-                <input class="form-control" name="foto" type="text" th:fields="*{photo}"/>
+                <label class="form-label" for="files">Vyberte soubor</label>
+                <input class="form-control" type="file" id="photo" name="file">
+                <small th:if="${missingFile}" th:text="${missingFile}" class="error"></small>
             </div>
             <div>
                 <input class="btn btn-primary" type="submit" value="Uložit">

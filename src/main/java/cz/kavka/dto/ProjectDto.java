@@ -13,6 +13,6 @@ public record ProjectDto(
         @Size(max = 2000, message = "Maximální délka popisu je 2000 znaků")
         String description,
 
-        PhotoDto photo
+        String photoUrl
 ) {
 }

@@ -13,17 +13,21 @@
     <div class="container">
         <article>
             <h1>Fotky</h1>
-            <div class="picture-box d-grid gap-3">
-                <a data-fslightbox href="">
-                    <img class="my-picture" src="" alt="">
-                </a>
-
+            <div>
+                <div class="card my-card" th:each="album : ${allAlbums}">
+                    <img th:src="@{${album.photos[0].url}}" th:alt="${album.photos[0].name}">
+                    <div class="card-body">
+                        <h5 th:text="${album.name}" class="card-title"></h5>
+                        <p th:text="${album.description}" class="card-text"></p>
+                        <a th:href="@{'/album/' + ${album.id}}">Detail</a>
+                    </div>
+                </div>
             </div>
+
         </article>
     </div>
 
     <footer th:replace="~{fragments/layout.html :: footer}"></footer>
-    <script src="/../../script/fslightbox-basic-3.7.4/fslightbox.js"></script>
 </body>
 
 </html>

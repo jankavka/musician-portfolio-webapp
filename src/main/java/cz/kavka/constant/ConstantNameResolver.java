@@ -20,6 +20,7 @@ public class ConstantNameResolver {
     public static final String PROJECT_INDEX_PUBLIC_TEMPLATE = "public/pages/projects";
     public static final String PROJECT_CREATE_ADMIN_TEMPLATE = "admin/projects/create";
     public static final String PROJECT_EDIT_ADMIN_TEMPLATE = "admin/projects/edit";
+    public static final String PROJECT_CREATE_ADMIN = "/admin/projekty/novy";
 
 
     //=== Photo constants ===
@@ -31,11 +32,13 @@ public class ConstantNameResolver {
 
 
     //=== Album constants ===
+    public static final String ALBUM = "album";
     public static final String ALBUM_CREATE_ADMIN = "/admin/album/novy";
     public static final String ALBUM_DETAIL_ADMIN = "/admin/album/";
     public static final String ALBUM_CREATE_ADMIN_TEMPLATE = "admin/photos/create-album";
     public static final String ALBUM_DETAIL_ADMIN_TEMPLATE = "admin/photos/album-detail";
     public static final String ALBUM_EDIT_ADMIN_TEMPLATE = "admin/photos/edit-album";
+    public static final String ALBUM_DETAIL_TEMPLATE = "public/pages/album-detail";
 
 
     //=== About me constants ===
@@ -62,6 +65,21 @@ public class ConstantNameResolver {
     public static final String USER_ADMIN_PROFILE_TEMP = "admin/user/profile";
     public static final String USER_PASSWORD_CHANGE_TEMP = "admin/user/password-change";
     public static final String USER_PROFILE = "/profile";
+
+
+
+    //=== Video constants ===
+    public static final String VIDEO_ADMIN_CREATE = "/admin/video/novy";
+    public static final String VIDEO_INDEX_TEMPLATE = "public/pages/videos";
+    public static final String VIDEO_ADMIN_DETAIL_TEMPLATE = "admin/videos/detail";
+    public static final String VIDEO_ADMIN_INDEX = "/admin/video";
+    public static final String VIDEO_ADMIN_CREATE_TEMPLATE = "admin/videos/create";
+    public static final String VIDEO_ADMIN_INDEX_TEMPLATE = "admin/videos/index";
+
+
+
+    //=== Error message const===
+    public static final String ERROR_MESSAGE_TEMPLATE = "{}, {}";
 
 
 }

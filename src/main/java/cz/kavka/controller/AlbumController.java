@@ -28,9 +28,17 @@ public class AlbumController {
     @GetMapping("/admin/album/{id}")
     public String getAdminAlbumDetail(Model model, @PathVariable Long id) {
         var album = albumService.getAlbum(id);
-        model.addAttribute("album", album);
+        model.addAttribute(ALBUM, album);
 
         return ALBUM_DETAIL_ADMIN_TEMPLATE;
+    }
+
+    @GetMapping("/album/{id}")
+    public String getAlbumDetail(Model model, @PathVariable Long id) {
+        var album = albumService.getAlbum(id);
+        model.addAttribute(ALBUM, album);
+
+        return ALBUM_DETAIL_TEMPLATE;
     }
 
 

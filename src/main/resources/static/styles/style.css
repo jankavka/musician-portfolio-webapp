@@ -6,8 +6,11 @@
 :root {
     --bg-darker: rgb(237, 209, 130);
     --bg-lighter: rgb(237, 224, 189);
-    --bg-admin: rgb(216, 222, 247);
-    --bd-admin-body: rgb(177, 192, 250)
+    --bg-lighter-gradient: linear-gradient(135deg, rgb(255, 202, 122) 0%, rgb(228, 135, 104) 100%);
+    --bg-admin: rgb(147, 167, 246);
+    /*--bg-admin-body: rgb(177, 192, 250);*/
+    --bg-admin-body: linear-gradient(135deg, rgb(250, 238, 218) 0%, rgb(250, 236, 231) 100%);
+    --active-underline: 5px solid rgb(207, 66, 0) !important;
 }
 
 /* navigation and general */
@@ -34,16 +37,18 @@ main:after {
 }
 
 body {
-    background-color: var(--bg-darker);
+    /*background-color: var(--bg-darker);*/
+    background: var(--bg-lighter-gradient);
     margin: 0 auto;
 }
 
 .admin-body {
-    background-color: var(--bd-admin-body);
+    /*background-color: var(--bg-admin-body);*/
+    background: var(--bg-admin-body);
     margin: 0 auto;
 }
 
-.admin-body .my-admin-height{
+.admin-body .my-admin-height {
     min-height: 70dvh;
 }
 
@@ -53,7 +58,7 @@ article {
 }
 
 .active-nav {
-    border-bottom: 5px solid rgb(208, 208, 16) !important;
+    border-bottom: var(--active-underline)
 }
 
 .title-image {
@@ -73,7 +78,7 @@ article {
 }
 
 .my-bg-nav {
-    background-color: var(--bg-lighter);
+    background-color: var(--bg-lighter-gradient);
 }
 
 .admin-bg-nav {
@@ -81,7 +86,8 @@ article {
 }
 
 .my-dropdown-bg {
-    background-color: var(--bg-lighter);
+    /*background-color: var(--bg-lighter-gradient);*/
+    background: var(--bg-lighter-gradient);
 }
 
 footer {
@@ -93,6 +99,24 @@ footer {
 
 .dev-link {
     color: black;
+}
+
+.error {
+    color: red;
+}
+
+.container {
+    min-height: 80dvh;
+}
+
+.my-card {
+    max-width: 20dvh;
+    margin-right: 3rem;
+
+}
+
+.my-table-width {
+    max-width: 40dvh;
 }
 
 
@@ -144,18 +168,4 @@ footer {
 
 .contact .mail-link {
     color: black
-}
-
-.error {
-    color: red;
-}
-
-.container {
-    min-height: 80dvh;
-}
-
-.my-card{
-    max-width: 20dvh;
-    margin-right: 3rem;
-
 }

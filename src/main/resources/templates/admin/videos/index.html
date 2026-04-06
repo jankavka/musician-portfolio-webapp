@@ -9,15 +9,43 @@
 
 <body class="admin-body my-admin-height" style="min-height: 50dvh;">
     <nav th:replace="~{fragments/admin-layout.html :: navigation}"></nav>
+    <div class="alert alert-success text-center" th:if="${success}" th:text="${success}"></div>
 
     <div class="container my-admin-height">
         <article>
-            <h1>Videa</h1>
+            <div class="mb-3">
+                <h1>Videa</h1>
+                <a class="btn btn-success" th:href="@{/admin/video/novy}">Nové video</a>
+            </div>
+            <table class="table table-responsive">
+                <thead>
+                    <th>Video</th>
+                    <th>Url</th>
+                    <th>Akce</th>
+                </thead>
+                <tbody>
+                    <tr th:each="video : ${videos}">
+                        <td>
+
+                            <p th:text="${video.videoYoutubeId}" class="video collapse" aria-hidden="true"></p>
+                            <p th:text="${video.id}" class="name collapse"></p>
+
+                            <div enablejsapi th:id="${video.id}"></div>
+                            <div hidden th:text="${video.videoYoutubeId}" th:id="${'entity' + video.id}"></div>
+                        </td>
+                        <td th:text="${video.url}"></td>
+                        <td>
+                            <a th:id="${video.id}" name="deleteButton" class="btn btn-outline-danger">Vymazat</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </article>
 
     </div>
 
     <footer th:replace="~{fragments/admin-layout.html :: footer}"></footer>
+
 
 </body>
 

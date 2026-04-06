@@ -22,8 +22,8 @@ public class PhotoController {
 
     @GetMapping("/foto")
     public String renderPhotos(Model model) {
-        var allPhotos = photoService.getAllPhotos();
-        model.addAttribute("allPhotos", allPhotos);
+        var allAlbums = albumService.getAllAlbums();
+        model.addAttribute("allAlbums", allAlbums);
         return PHOTO_INDEX_PUBLIC_TEMPLATE;
     }
 
@@ -55,7 +55,7 @@ public class PhotoController {
     }
 
     @GetMapping("/admin/foto/vymazat/{id}")
-    public String deletePhoto(@PathVariable Long id, RedirectAttributes attributes, HttpServletRequest req) {
+    public String deletePhoto(@PathVariable Long id, RedirectAttributes attributes) {
         var albumId = photoService.getPhoto(id).album().id();
         photoService.deletePhoto(id);
         attributes.addFlashAttribute(SUCCESS, "Fotka úspěšně vymazána");

@@ -47,3 +47,5 @@ about-me/*
 !**/static/pictures/.gitkeep
 photos/*
 !photos/.gitkeep
+project-photos/*
+!project-photos/.gitkeep

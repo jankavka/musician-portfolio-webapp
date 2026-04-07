@@ -17,13 +17,17 @@
                 <small class="error" th:errors="*{email}"></small>
             </div>
             <div class="mb-3">
-                <label class="form-label" for="password">Password</label>
+                <label class="form-label" for="password">Heslo</label>
                 <input class="form-control" type="password" id="password" th:field="*{password}">
                 <small class="error" th:errors="*{password}"></small>
             </div>
             <div class="mb-3">
-                <label class="form-label" for="password2">Password</label>
-                <input class="form-control" type="password" id="password2">
+                <label class="form-label" for="password2">Potvrzení hesla</label>
+                <input class="form-control" type="password" id="password2" th:field="*{confirmPassword}">
+                <small class="error" th:errors="*{confirmPassword}"></small>
+                <!-- <small class="error" th:if="${confirmPassword}" th:text="${confirmPassword}"></small> -->
+                <div>UPDATED2</div>
+
             </div>
             <div class="mb-3">
                 <input class="btn btn-primary" type="submit" value="Registrovat" style="margin: 3px;">

@@ -13,7 +13,10 @@ public record UserDto(
 
         @NotBlank(message = "Pole nesmé být prázdné")
         @Size(min = 6, message = "Heslo musí obsahovat minimálně 6 znaků")
-        String password
+        String password,
+
+        @NotBlank(message = "Pole nesmé být prázdné")
+        String confirmPassword
 ) {
 
 }

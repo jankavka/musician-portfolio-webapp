@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: "jdbc:mysql://localhost:3306/vlastik?createDatabaseIfNotExist=true"
+    url: "jdbc:mysql://db:3306/vlastik?createDatabaseIfNotExist=true"
     driver-class-name: "com.mysql.cj.jdbc.Driver"
     username: root
-    password:
+    password: 1234
     platform: MYSQL
   jpa:
     properties:
@@ -21,7 +21,8 @@ server:
     max-swallow-size: -1
 photos:
   path: "photos/"
-  resource: "file:/Users/mpmp/it_projects/musician-portfolio-page/photos/"
+  #resource: "file:/Users/mpmp/it_projects/musician-portfolio-page/photos/"
+  resource: "file:/app/photos"
 contacts:
   path: "contacts/"
   json-file: "contacts.json"
@@ -30,4 +31,5 @@ about-me:
   json-file: "about-me.json"
 projects:
   path: "project-photos/"
-  resource: "file:/Users/mpmp/it_projects/musician-portfolio-page/project-photos"
+  #resource: "file:/Users/mpmp/it_projects/musician-portfolio-page/project-photos"
+  resource: "file:/app/project-photos"

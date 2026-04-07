@@ -13,6 +13,7 @@
             <h1>Přihlášení</h1>
             <div class="alert alert-danger" th:if="${error}" th:text="${error}"></div>
             <div class="alert alert-danger" th:if="${param.error}">Chyba během přihlašování. Zkuste to znovu.</div>
+            <div class="alert alert-success" th:if="${success}" th:text="${success}"></div>
             <a aria-hidden="true" hidden th:href="@{/registration}" style="display: none; visibility: hidden;">Registrovat</a>
             <form method="post" th:action="@{/login}">
                 <div class="mb-3">

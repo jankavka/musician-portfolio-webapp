@@ -10,17 +10,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.security.auth.login.CredentialExpiredException;
-import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.Random;
 
 import static cz.kavka.service.exception.message.ExceptionMessage.USER_NOT_FOUND;
@@ -37,6 +33,8 @@ public class UserServiceImpl implements UserService {
     private final MailSender mailSender;
 
     private final SimpleMailMessage templateMessage;
+
+    private UserService userService;
 
     private final Random random = new Random();
 
@@ -112,7 +110,7 @@ public class UserServiceImpl implements UserService {
         if (authentication != null && authentication.getPrincipal() != null) {
             currentUser = (UserEntity) authentication.getPrincipal();
             if (currentUser != null) {
-                return new UserDto(currentUser.getId(), currentUser.getUsername(), "===SECRET===");
+                return new UserDto(currentUser.getId(), currentUser.getUsername(), "===SECRET===", null);
             } else {
                 throw new EntityNotFoundException();
             }
@@ -122,9 +120,10 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Transactional(readOnly = true)
     @Override
     public void handleLogout() {
-        if(getCurrentUser() != null) {
+        if(userService.getCurrentUser() != null) {
             SecurityContextHolder.clearContext();
         }
     }

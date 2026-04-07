@@ -6,6 +6,8 @@ import cz.kavka.dto.UserDto;
 import cz.kavka.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +21,7 @@ import static cz.kavka.constant.ConstantNameResolver.*;
 @RequiredArgsConstructor
 public class UserController {
 
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
 
     @GetMapping("/login")
@@ -53,9 +56,14 @@ public class UserController {
     @PostMapping("/registration")
     public String registerUser(@Valid UserDto userDto, BindingResult result, RedirectAttributes attributes) {
         if (result.hasErrors()) {
+            log.error("{}", result);
             return renderRegistrationForm(userDto);
         }
-
+        if (!userDto.password().trim().equals(userDto.confirmPassword().trim())) {
+            result.rejectValue("confirmPassword","error", "Hesla se neshodují");
+            return renderRegistrationForm(userDto);
+        }
+        attributes.addFlashAttribute(SUCCESS, "uživatel vytvořen");
         userService.createUser(userDto);
         return REDIRECT + USER_LOGIN;
     }
@@ -105,6 +113,8 @@ public class UserController {
         }
 
         if (!passwordChangeDto.password().trim().equals(passwordChangeDto.confirmPassword().trim())) {
+            result.rejectValue("confirmPassword","error", "Hesla se neshodují");
+            return renderPasswordChangeForm(passwordChangeDto);
         }
 
         attributes.addAttribute("success", "Změna hesla proběhla úspěšně");

@@ -1,0 +1,27 @@
+services:
+  backend:
+    build: .
+    depends_on:
+      - db
+    ports:
+      - 8080:8080
+    container_name: musician-backend
+    restart: always
+    volumes:
+      - ./about-me:/app/about-me
+      - ./contacts:/app/contacts
+      - ./photos:/app/photos
+      - ./project-photos:/app/project-photos
+  db:
+    image: mysql
+    ports:
+      - 3306:3306
+    volumes:
+      - db-data:/app/db-data
+    restart: always
+    container_name: musician-db
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: vlastik
+volumes:
+  db-data:

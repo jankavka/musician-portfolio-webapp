@@ -6,7 +6,7 @@
 :root {
     --bg-darker: rgb(237, 209, 130);
     --bg-lighter: rgb(237, 224, 189);
-    --bg-lighter-gradient: linear-gradient(135deg, rgb(255, 202, 122) 0%, rgb(228, 135, 104) 100%);
+    --bg-lighter-gradient: linear-gradient(135deg, rgb(255, 202, 122) , rgb(228, 135, 104));
     --bg-admin: rgb(147, 167, 246);
     /*--bg-admin-body: rgb(177, 192, 250);*/
     --bg-admin-body: linear-gradient(135deg, rgb(250, 238, 218) 0%, rgb(250, 236, 231) 100%);
@@ -40,6 +40,7 @@ body {
     /*background-color: var(--bg-darker);*/
     background: var(--bg-lighter-gradient);
     margin: 0 auto;
+    min-height: 100dvh;
 }
 
 .admin-body {
@@ -146,6 +147,11 @@ footer {
     max-height: 100px;
 }
 
+.project-picture {
+    max-width: 40dvh;
+    max-height: 30dvh;
+}
+
 /* Contact section */
 
 .contact .contact-item {
@@ -168,4 +174,10 @@ footer {
 
 .contact .mail-link {
     color: black
+}
+
+/*Video section*/
+
+.video-box{
+    max-width: 100dvw;
 }

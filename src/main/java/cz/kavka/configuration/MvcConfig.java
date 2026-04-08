@@ -11,10 +11,14 @@ public class MvcConfig implements WebMvcConfigurer {
     @Value("${photos.resource}")
     private String photoResourceLocation;
 
+    @Value("${projects.resource}")
+    private String projectPhotoResourceLocation;
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
-                .addResourceHandler("/photos/**")
-                .addResourceLocations(photoResourceLocation);
+                .addResourceHandler("/photos/**", "/project-photos/**")
+                .addResourceLocations(photoResourceLocation)
+                .addResourceLocations(projectPhotoResourceLocation);
     }
 }

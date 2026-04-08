@@ -8,6 +8,14 @@ public class StringNormalizer {
 
     }
 
+    /**
+     * Static method for creating normalized string. It replaces all white spaces in the middle
+     * of the given String and all czech characters contained in given String.
+     *
+     * @param originalFileName original String
+     * @param useUuid          if the UUID.randomUUID() should be used or not
+     * @return normalized string, ideal for file name
+     */
     public static String getNormalizedString(String originalFileName, boolean useUuid) {
         var name = originalFileName.split("\\.")[0];
         var result = name
@@ -15,11 +23,8 @@ public class StringNormalizer {
                 .replaceAll("\\s+", "_")
                 .toLowerCase()
                 .trim();
-        if (useUuid) {
-            return result + UUID.randomUUID();
-        } else {
-            return result;
-        }
+
+        return useUuid ? result + UUID.randomUUID() : result;
 
 
     }

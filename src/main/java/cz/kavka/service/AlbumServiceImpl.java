@@ -5,6 +5,7 @@ import cz.kavka.dto.mapper.AlbumMapper;
 import cz.kavka.entity.AlbumEntity;
 import cz.kavka.entity.PhotoEntity;
 import cz.kavka.entity.repository.AlbumRepository;
+import cz.kavka.service.files.MyFilesUtils;
 import cz.kavka.service.normalize.StringNormalizer;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,8 @@ public class AlbumServiceImpl implements AlbumService {
 
     private final AlbumMapper albumMapper;
 
+    private final MyFilesUtils filesUtils;
+
     private static final String SERVICE_NAME = "album";
 
     @Value("${photos.path}")
@@ -58,7 +61,7 @@ public class AlbumServiceImpl implements AlbumService {
         var savedAlbum = albumRepository.save(albumEntityToSave);
 
 
-        if (!files[0].isEmpty()) {
+        if (files[0] != null && !files[0].isEmpty()) {
             photoService.savePhoto(files, savedAlbum.getId());
         }
 
@@ -120,7 +123,7 @@ public class AlbumServiceImpl implements AlbumService {
                 .orElseThrow(() -> new EntityNotFoundException(entityNotFoundExceptionMessage(SERVICE_NAME, albumId)));
 
         albumRepository.deleteById(albumId);
-        deleteAlbumDir(album);
+        filesUtils.deleteAlbumDir(album);
 
     }
 
@@ -131,24 +134,4 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
 
-    private void deleteAlbumDir(AlbumEntity album) {
-        File file = new File(album.getAlbumPath());
-
-        try {
-            var allFiles = file.listFiles();
-            if (allFiles != null) {
-                for (File f : allFiles) {
-                    if (f != null) {
-                        Files.delete(f.toPath());
-                    }
-                }
-            }
-            Files.delete(file.toPath());
-        } catch (IOException e) {
-            log.warn("Chyba při mazání alba");
-            log.warn(e.getMessage());
-        }
-
-
-    }
 }

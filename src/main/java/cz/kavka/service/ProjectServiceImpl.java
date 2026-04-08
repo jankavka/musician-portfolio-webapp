@@ -3,8 +3,8 @@ package cz.kavka.service;
 import cz.kavka.dto.ProjectDto;
 import cz.kavka.dto.mapper.ProjectMapper;
 import cz.kavka.entity.repository.ProjectRepository;
+import cz.kavka.service.exception.WrongContentTypeException;
 import cz.kavka.service.files.MyFilesUtils;
-import cz.kavka.service.normalize.StringNormalizer;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.List;
-import java.util.Objects;
 
 import static cz.kavka.service.exception.message.ExceptionMessage.entityNotFoundExceptionMessage;
 
@@ -43,13 +42,23 @@ public class ProjectServiceImpl implements ProjectService {
         this.dirUrl = dirUrl;
     }
 
+    /**
+     * creates a new project based on params mentioned lower. If file is empty or is null NullPointerException
+     * is thrown.
+     *
+     * @param projectDto object with info about project such as name and description
+     * @param file       MultipartFile instance with photo related to project
+     */
     @Override
     @Transactional
     public void createProject(ProjectDto projectDto, MultipartFile file) {
         if (file != null && !file.isEmpty()) {
-            var fileName = StringNormalizer.getNormalizedString(
-                    (Objects.requireNonNull(file.getOriginalFilename())), true);
-            var suffix = Objects.requireNonNull(file.getOriginalFilename()).split("\\.")[1];
+            var contentType = file.getContentType();
+            if (contentType == null || !contentType.startsWith("image/")) {
+                throw new WrongContentTypeException("Povoleny jsou pouze obrázky");
+            }
+            var fileName = filesUtils.getFileName(file);
+            var suffix = filesUtils.getSuffix(file);
 
             File photo = new File(dirUrl + File.separator + fileName + "." + suffix);
 
@@ -63,8 +72,8 @@ public class ProjectServiceImpl implements ProjectService {
             throw new NullPointerException("Soubory nesmí být prázdné");
         }
 
-
     }
+
 
     @Override
     @Transactional(readOnly = true)
@@ -84,24 +93,58 @@ public class ProjectServiceImpl implements ProjectService {
                 .toList();
     }
 
+    /**
+     * Edits information about project including photo represented and MultipartFile. If multipart is null or is empty
+     * the photo remains the same as before editing.
+     *
+     * @param projectDto object with updated info about project
+     * @param file       MultipartFile instance with photo related to project
+     * @param id         primary key of project entity
+     */
     @Override
     @Transactional
     public void editProject(ProjectDto projectDto, MultipartFile file, Long id) {
+
         var entityToEdit = projectRepository
                 .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(entityNotFoundExceptionMessage(SERVICE_NAME, id)));
 
-        projectMapper.updateEntity(entityToEdit, projectDto);
+        if (file != null && !file.isEmpty()) {
+            var contentType = file.getContentType();
+            if (contentType == null || !contentType.startsWith("image/")) {
+                throw new WrongContentTypeException("Povoleny jsou pouze obrázky");
+            }
+
+            var fileName = filesUtils.getFileName(file);
+            var suffix = filesUtils.getSuffix(file);
+
+            File photo = new File(dirUrl + File.separator + fileName + "." + suffix);
+
+            filesUtils.savePhotoFile(file, photo);
+
+            projectMapper.updateEntity(entityToEdit, projectDto);
+            entityToEdit.setPhotoUrl(photo.getPath());
+
+
+        } else {
+            entityToEdit.setName(projectDto.name());
+            entityToEdit.setDescription(projectDto.description());
+
+        }
 
     }
 
     @Override
     @Transactional
     public void deleteProject(Long id) {
-        if (projectRepository.existsById(id)) {
-            projectRepository.deleteById(id);
-        } else {
-            throw new EntityNotFoundException(entityNotFoundExceptionMessage(SERVICE_NAME, id));
-        }
+        var project = projectRepository
+                .findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(entityNotFoundExceptionMessage(SERVICE_NAME, id)));
+        projectRepository.deleteById(id);
+
+        filesUtils.deletePhotoFile(project.getPhotoUrl());
+
     }
+
+
 }

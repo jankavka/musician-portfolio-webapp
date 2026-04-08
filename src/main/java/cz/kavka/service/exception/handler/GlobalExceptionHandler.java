@@ -1,6 +1,7 @@
 package cz.kavka.service.exception.handler;
 
 import cz.kavka.service.exception.MultipartFilesEmptyException;
+import cz.kavka.service.exception.WrongContentTypeException;
 import cz.kavka.service.exception.WrongVideoSourceException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -128,6 +129,18 @@ public class GlobalExceptionHandler {
         attributes.addFlashAttribute(ERROR, e.getMessage());
         return REDIRECT + VIDEO_ADMIN_CREATE;
 
+    }
+
+    @ExceptionHandler(WrongContentTypeException.class)
+    public String handleWrongContentTypeException(
+            WrongContentTypeException e,
+            HttpServletRequest req,
+            RedirectAttributes attributes
+    ) {
+
+        log.error("{}, {}", e.getMessage(), e.getClass());
+        attributes.addFlashAttribute("missingFile", e.getMessage());
+        return REDIRECT + req.getRequestURI();
 
     }
 

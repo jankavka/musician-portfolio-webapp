@@ -194,8 +194,8 @@ document.addEventListener("DOMContentLoaded", function () {
         for (let j = 0; j < videoIds.length; j++) {
           var player;
           player = new YT.Player(videoName[j].innerText, {
-            height: currentLocation === "/admin/video" ? "100" : "360",
-            width: currentLocation === "/admin/video" ? "150" : "640",
+            height: currentLocation === "/admin/video" ? "100" : "200",
+            width: currentLocation === "/admin/video" ? "150" : "350",
             videoId: videoIds[j].innerText,
           });
         }

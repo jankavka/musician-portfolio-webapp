@@ -12,11 +12,7 @@ public interface PhotoService {
 
     PhotoDto getPhoto(Long id);
 
-    List<PhotoDto> getAllPhotos();
-
     List<PhotoEntity> getAllPhotosByAlbum(Long albumId);
-
-    void editPhoto(PhotoDto photoDto, Long id);
 
     void deletePhoto(Long id);
 }

@@ -12,6 +12,7 @@ public interface PhotoRepository extends JpaRepository<PhotoEntity, Long> {
 
     List<PhotoEntity> getAllPhotosByAlbumId(Long albumId);
 
+    @Override
     @Modifying
     @Query("DELETE FROM PhotoEntity p WHERE p.id = :id")
     void deleteById(@Param("id") Long id);

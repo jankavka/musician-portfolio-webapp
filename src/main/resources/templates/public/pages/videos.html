@@ -14,16 +14,18 @@
     <article>
       <h1>Videa</h1>
 
-      <div th:each="video : ${videos}">
+      <div class="d-flex justify-content-start video-box flex-wrap">
+        <div th:each="video : ${videos}" style="margin: 5px;">
 
-        <p th:text="${video.videoYoutubeId}" class="video collapse" aria-hidden="true"></p>
-        <p th:text="${video.id}" class="name collapse"></p>
+          <p th:text="${video.videoYoutubeId}" class="video collapse" aria-hidden="true"></p>
+          <p th:text="${video.id}" class="name collapse"></p>
 
-        <div enablejsapi th:id="${video.id}">
+          <div enablejsapi th:id="${video.id}">
+          </div>
         </div>
 
 
-    </div>
+      </div>
     </article>
   </div>
 

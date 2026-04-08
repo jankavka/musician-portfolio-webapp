@@ -13,31 +13,33 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import static cz.kavka.constant.ConstantNameResolver.*;
+
 @Controller
 @RequiredArgsConstructor
-public class ConcertsController {
+public class ConcertController {
 
     private final ConcertService concertService;
 
     @GetMapping("/koncerty")
     public String renderConcerts(Model model) {
         var allConcerts = concertService.getAllConcerts();
-        model.addAttribute("concerts", allConcerts);
-        return "public/pages/concerts";
+        model.addAttribute(CONCERTS, allConcerts);
+        return CONCERT_INDEX_TEMPLATE;
     }
 
     @GetMapping("/admin/koncerty")
     public String renderAdminConcerts(Model model) {
         var allConcerts = concertService.getAllConcerts();
-        model.addAttribute("concerts", allConcerts);
-        return "admin/concerts/index";
+        model.addAttribute(CONCERTS, allConcerts);
+        return CONCERT_ADMIN_INDEX_TEMPLATE;
     }
 
     @GetMapping("/admin/koncerty/{id}")
     public String renderConcertDetail(@PathVariable Long id, Model model) {
         var concert = concertService.getConcert(id);
-        model.addAttribute("concert", concert);
-        return "/admin/concerts/detail";
+        model.addAttribute(CONCERT, concert);
+        return CONCERT_ADMIN_DETAIL_TEMPLATE;
     }
 
     @GetMapping("/admin/koncerty/novy")
@@ -53,15 +55,15 @@ public class ConcertsController {
         }
         concertService.createConcert(concertDto);
         attributes.addFlashAttribute(
-                "success", "Koncert s názvem " + concertDto.name() + " úspěšně vytvořen");
-        return "redirect:/admin/koncerty";
+                SUCCESS, "Koncert s názvem " + concertDto.name() + " úspěšně vytvořen");
+        return REDIRECT + CONCERT_ADMIN_INDEX;
     }
 
     @GetMapping("/admin/koncerty/upravit/{id}")
     public String renderEditForm(@PathVariable Long id, Model model) {
         var concert = concertService.getConcert(id);
         model.addAttribute("concertDto", concert);
-        return "admin/concerts/edit";
+        return CONCERT_ADMIN_EDIT_TEMPLATE;
     }
 
     @PostMapping("/admin/koncerty/upravit/{id}")
@@ -78,8 +80,8 @@ public class ConcertsController {
         }
         concertService.editConcert(concertDto, id);
         attributes.addFlashAttribute(
-                "success", "Koncert s názvem" + concertDto.name() + " úspěšně upraven");
-        return "redirect:/admin/koncerty";
+                SUCCESS, "Koncert s názvem" + concertDto.name() + " úspěšně upraven");
+        return REDIRECT + CONCERT_ADMIN_INDEX;
 
     }
 
@@ -87,7 +89,7 @@ public class ConcertsController {
     @GetMapping("/admin/koncerty/vymazat/{id}")
     public String deleteConcert(@PathVariable Long id, RedirectAttributes attributes) {
         concertService.deleteConcert(id);
-        attributes.addFlashAttribute("success", "Koncert úspěšně vymazán");
-        return "redirect:/admin/koncerty";
+        attributes.addFlashAttribute(SUCCESS, "Koncert úspěšně vymazán");
+        return REDIRECT + CONCERT_ADMIN_INDEX;
     }
 }

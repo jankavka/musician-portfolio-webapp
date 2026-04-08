@@ -49,3 +49,4 @@ photos/*
 !photos/.gitkeep
 project-photos/*
 !project-photos/.gitkeep
+.env

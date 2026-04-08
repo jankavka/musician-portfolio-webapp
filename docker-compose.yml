@@ -1,6 +1,8 @@
 services:
   backend:
     build: .
+    env_file:
+      - .env
     depends_on:
       - db
     ports:
@@ -21,7 +23,7 @@ services:
     restart: always
     container_name: musician-db
     environment:
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: vlastik
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
 volumes:
   db-data:

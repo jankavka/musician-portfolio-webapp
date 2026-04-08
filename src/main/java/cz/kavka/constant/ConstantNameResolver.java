@@ -76,6 +76,16 @@ public class ConstantNameResolver {
     public static final String VIDEO_ADMIN_CREATE_TEMPLATE = "admin/videos/create";
     public static final String VIDEO_ADMIN_INDEX_TEMPLATE = "admin/videos/index";
 
+    //=== Concert const===
+    public static final String CONCERTS = "concerts";
+    public static final String CONCERT = "concert";
+    public static final String CONCERT_INDEX_TEMPLATE = "public/pages/concerts";
+    public static final String CONCERT_ADMIN_INDEX_TEMPLATE = "admin/concerts/index";
+    public static final String CONCERT_ADMIN_DETAIL_TEMPLATE = "admin/concerts/detail";
+    public static final String CONCERT_ADMIN_INDEX = "/admin/koncerty";
+    public static final String CONCERT_ADMIN_EDIT_TEMPLATE = "admin/concerts/edit";
+
+
 
 
     //=== Error message const===

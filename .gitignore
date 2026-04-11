@@ -50,3 +50,5 @@ photos/*
 project-photos/*
 !project-photos/.gitkeep
 .env
+contacts/
+!contacts/.gitkeep

@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import static cz.kavka.service.exception.message.ExceptionMessage.entityNotFoundExceptionMessage;
 
@@ -25,7 +27,6 @@ public class ConcertServiceImpl implements ConcertService {
     private final ConcertRepository concertRepository;
 
     private static final String SERVICE_NAME = "koncert";
-
 
     @Transactional
     @Override
@@ -40,11 +41,8 @@ public class ConcertServiceImpl implements ConcertService {
         var concertEntity = concertRepository
                 .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(entityNotFoundExceptionMessage(SERVICE_NAME, id)));
-        //System.out.println(concertEntity.getStartDateTime().format(DateTimeFormatter.ofLocalizedPattern("")));
 
-        concertEntity.setFormattedTime(DateTimeFormatter
-                .ofLocalizedDateTime(FormatStyle.LONG, FormatStyle.SHORT)
-                .format(concertEntity.getStartDateTime()));
+        concertEntity.setFormattedTime(formatTime(concertEntity.getStartDateTime()));
 
         return concertMapper.toDto(concertEntity);
     }
@@ -54,9 +52,7 @@ public class ConcertServiceImpl implements ConcertService {
     public List<ConcertDto> getAllConcerts() {
         var allConcerts = concertRepository.findAll();
         allConcerts.forEach(concertEntity -> concertEntity
-                .setFormattedTime(DateTimeFormatter
-                        .ofLocalizedDateTime(FormatStyle.LONG, FormatStyle.SHORT)
-                        .format(concertEntity.getStartDateTime())));
+                .setFormattedTime(formatTime(concertEntity.getStartDateTime())));
 
         return allConcerts
                 .stream()
@@ -86,9 +82,11 @@ public class ConcertServiceImpl implements ConcertService {
         }
     }
 
-    public String formattedTime(LocalDateTime time) {
+    public String formatTime(LocalDateTime time) {
         return DateTimeFormatter
                 .ofLocalizedDateTime(FormatStyle.LONG, FormatStyle.SHORT)
+                .withLocale(Locale.of("cs"))
+                .withZone(ZoneId.of("Europe/Prague"))
                 .format(time);
     }
 }

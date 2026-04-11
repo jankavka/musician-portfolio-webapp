@@ -66,8 +66,6 @@ public class ConstantNameResolver {
     public static final String USER_PASSWORD_CHANGE_TEMP = "admin/user/password-change";
     public static final String USER_PROFILE = "/profile";
 
-
-
     //=== Video constants ===
     public static final String VIDEO_ADMIN_CREATE = "/admin/video/novy";
     public static final String VIDEO_INDEX_TEMPLATE = "public/pages/videos";
@@ -84,9 +82,6 @@ public class ConstantNameResolver {
     public static final String CONCERT_ADMIN_DETAIL_TEMPLATE = "admin/concerts/detail";
     public static final String CONCERT_ADMIN_INDEX = "/admin/koncerty";
     public static final String CONCERT_ADMIN_EDIT_TEMPLATE = "admin/concerts/edit";
-
-
-
 
     //=== Error message const===
     public static final String ERROR_MESSAGE_TEMPLATE = "{}, {}";

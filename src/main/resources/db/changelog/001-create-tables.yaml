@@ -1,0 +1,119 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001
+      author: jan
+      changes:
+        - createTable:
+            tableName: albums
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: description
+                  type: VARCHAR(250)
+              - column:
+                  name: album_path
+                  type: VARCHAR(255)
+        - createTable:
+            tableName: concerts
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: band
+                  type: VARCHAR(255)
+              - column:
+                  name: start_date_time
+                  type: DATETIME
+              - column:
+                  name: link_to_event
+                  type: VARCHAR(255)
+        - createTable:
+            tableName: photos
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: url
+                  type: VARCHAR(255)
+              - column:
+                  name: album_id
+                  type: BIGINT
+        - createTable:
+            tableName: projects
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: description
+                  type: VARCHAR(2000)
+              - column:
+                  name: photo_url
+                  type: VARCHAR(255)
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: email
+                  type: VARCHAR(60)
+              - column:
+                  name: password
+                  type: VARCHAR(60)
+              - column:
+                  name: role
+                  type: VARCHAR(255)
+        - createTable:
+            tableName: videos
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: url
+                  type: VARCHAR(255)
+              - column:
+                  name: video_youtube_id
+                  type: VARCHAR(255)
+        - addForeignKeyConstraint:
+            baseTableName: photos
+            baseColumnNames: album_id
+            constraintName: fk_album
+            referencedColumnNames: id
+            referencedTableName: albums

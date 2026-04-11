@@ -7,12 +7,15 @@ spring:
     platform: MYSQL
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: true
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
 server:
   tomcat:
     max-swallow-size: -1

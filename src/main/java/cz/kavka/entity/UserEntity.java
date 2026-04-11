@@ -1,12 +1,9 @@
 package cz.kavka.entity;
 
 import cz.kavka.constant.role.Role;
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
-import jdk.dynalink.linker.support.SimpleLinkRequest;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,12 +33,14 @@ public class UserEntity implements UserDetails {
 
 
     @Override
+    @Nonnull
     public Collection<? extends GrantedAuthority> getAuthorities() {
         GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.getSpec());
         return List.of(authority);
     }
 
     @Override
+    @Nonnull
     public String getUsername() {
         return getEmail();
     }

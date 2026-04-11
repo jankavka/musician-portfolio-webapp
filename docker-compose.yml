@@ -1,4 +1,15 @@
 services:
+  db:
+    image: mysql
+    ports:
+      - 3306:3306
+    volumes:
+      - db-data:/app/db-data
+    restart: always
+    container_name: musician-db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
   backend:
     build: .
     env_file:
@@ -14,16 +25,5 @@ services:
       - ./contacts:/app/contacts
       - ./photos:/app/photos
       - ./project-photos:/app/project-photos
-  db:
-    image: mysql
-    ports:
-      - 3306:3306
-    volumes:
-      - db-data:/app/db-data
-    restart: always
-    container_name: musician-db
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}
 volumes:
   db-data:

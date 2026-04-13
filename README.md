@@ -54,7 +54,7 @@ DB_URL=jdbc:mysql://localhost:3306/musician DB_PASSWORD=secret mvn spring-boot:r
 Create a `.env` file in the project root:
 
 ```env
-DB_URL=jdbc:mysql://musician-db:3306/musician
+DB_URL=jdbc:mysql://db:3306/musician?createDatabaseIfNotExist=true
 DB_PASSWORD=secret
 DB_NAME=musician
 ```

@@ -35,19 +35,7 @@ A web application for managing a musician's portfolio. Provides a public-facing 
 
 ### Prerequisites
 
-- Java 21
-- Maven
-- MySQL (local or via Docker)
-
-### Local
-
-```bash
-# Build
-mvn clean package -DskipTests
-
-# Run
-DB_URL=jdbc:mysql://localhost:3306/musician DB_PASSWORD=secret mvn spring-boot:run
-```
+- Docker & Docker Compose
 
 ### Docker Compose
 
@@ -59,9 +47,10 @@ DB_PASSWORD=secret
 DB_NAME=musician
 ```
 
-Then run:
+Then build the JAR and start the containers:
 
 ```bash
+mvn clean package -DskipTests
 docker compose up --build
 ```
 
